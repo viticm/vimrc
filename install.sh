@@ -4,12 +4,14 @@ currentdir=`pwd`
 #@param void
 #@return void
 function help_text() {
-  echo -e "${0} ver 1.0 \n"
-  echo "options:"
-  echo "--base   install base vim config(base plugin)"
-  echo "--full   install full vim config(all use plugin)"
-  echo "--help   view the text, or just use -h"
-  echo "--update update all amix vimrc to git(just for me) "
+  cat <<EOF
+${0} ver 1.0 \n
+options:
+--base   install base vim config(base plugin)
+--full   install full vim config(all use plugin)
+--help   view the text, or just use -h
+--update update all amix vimrc to git(just for me)
+EOF
 }
 
 #print error message, red words
@@ -50,6 +52,9 @@ function base() {
                          sed 's/.*runtimepath.*=//g'"
   local runtimepath=`echo ${cmd_runtimepath} | sh`
   runtimepath=`getpath ${runtimepath}`
+  echo "Now clean your home vim files, rm -rf ~/.vim*, Ctrl+C to abort now"
+  read answer
+  rm -rf ${HOME}/*.vim
   rm -rf ${runtimepath}
   cp amix-vimrc ${runtimepath} -r
   sh ${runtimepath}/install_basic_vimrc.sh
@@ -66,6 +71,9 @@ function full() {
                         "
   local runtimepath=`echo ${cmd_runtimepath} | sh`
   runtimepath=`getpath ${runtimepath}`
+  echo "Now clean your home vim files, rm -rf ~/.vim*, Ctrl+C to abort now"
+  read answer
+  rm -rf ${HOME}/*.vim
   rm -rf ${runtimepath}
   cp amix-vimrc ${runtimepath} -r
   sh ${runtimepath}/install_awesome_vimrc.sh

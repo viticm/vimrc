@@ -35,10 +35,13 @@ clean_plugindir="no" #update plugin will delete the old dir
 #@param void
 #@return void
 function help_text() {
-  echo -e "${0} ver 1.0 \n"
-  echo "options:"
-  echo "--vimrc  update new vimrc form github.com)"
-  echo "--plugin update all vim plugins form github.com(need python)"
+  cat <<EOF
+${0} ver 1.0
+
+options:
+--vimrc  update new vimrc form github.com)
+--plugin update all vim plugins form github.com
+EOF
 }
 
 #print error message, red words
@@ -98,7 +101,7 @@ function plugin() {
   tmpdir="${currentdir}/tmp_plugin"
   rm -rf $tmpdir
   i=1
-  for plugin in $pluginslist do
+  for plugin in $pluginslist; do
     if [[ 0 == $(($i%2)) ]] ; then
       pluginurl=$plugin
       check=`echo $pluginurl | grep $pluginname`
