@@ -28,6 +28,7 @@ vim-expand-region https://github.com/terryma/vim-expand-region
 vim-multiple-cursors https://github.com/terryma/vim-multiple-cursors
 vim-fugitive https://github.com/tpope/vim-fugitive
 vim-airline https://github.com/bling/vim-airline
+vimerl https://github.com/jimenezrick/vimerl
 "
 clean_plugindir="no" #update plugin will delete the old dir
 
