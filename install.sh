@@ -82,10 +82,10 @@ function update() {
   git clone git://github.com/amix/vimrc.git ${tmpdir}
   rm -rf ${tmpdir}/.git
   cp ${tmpdir}/* amix-vimrc/ -r
+  rm -rf $tmpdir
   git add -A
   git commit -m "update the new amix vimrc"
   git push
-  rm -rf $tmpdir
 }
 
 #the script main function, like c/c++
