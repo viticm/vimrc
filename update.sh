@@ -101,6 +101,8 @@ function plugin() {
   tmpdir="${currentdir}/tmp_plugin"
   rm -rf $tmpdir
   i=1
+  local pluginname=""
+  local pluginurl=""
   for plugin in $pluginslist; do
     if [[ 0 == $(($i%2)) ]] ; then
       pluginurl=$plugin
@@ -110,19 +112,23 @@ function plugin() {
         error_message "plugin url${pluginurl} not found the name"
       fi
       plugindir="${currentdir}/sources_non_forked/"
-      check=`find $plugindir -type d -name .git`
+      check=`find $plugindir/${pluginname} -type d -name .git`
+
+      echo "update ${pluginname}"
       if [[ "" == $check ]] ; then
         mkdir -p ${tmpdir}
-        cd $tmpdir && git clone $pluginurl
+        cmd=`cd $tmpdir && git clone $pluginurl`
         cp ${tmpdir}/${pluginname} ${plugindir} -r
       else
-        cd $plugindir && git pull -rebase
+        cmd=`cd $plugindir/${pluginname} && git pull`
       fi
+      echo "update ${pluginname} end"
     else
       pluginname=$plugin
     fi
     ((++i))
   done
+  echo -e "all plugins is update"
   rm -rf $tmpdir
 }
 
