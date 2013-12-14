@@ -1,4 +1,9 @@
 #!/bin/bash
+#the vimrc install script
+#@version 1.0
+#@author viticm<viticm.ti@gmail.com>
+#@date 2013-12-14
+
 currentdir=`pwd`
 #help text, the script desc
 #@param void
