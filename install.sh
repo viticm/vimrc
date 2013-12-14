@@ -5,7 +5,8 @@ currentdir=`pwd`
 #@return void
 function help_text() {
   cat <<EOF
-${0} ver 1.0 \n
+${0} ver 1.0
+
 options:
 --base   install base vim config(base plugin)
 --full   install full vim config(all use plugin)
@@ -47,10 +48,16 @@ function getpath() {
 #@param void
 #@return void
 function base() {
-  local cmd_runtimepath="cat amix-vimrc/install_awesome_vimrc.sh | 
-                         grep runtimepath | 
-                         sed 's/.*runtimepath.*=//g'"
-  local runtimepath=`echo ${cmd_runtimepath} | sh`
+  local cmd_runtimepath=""
+  local runtimepath=""
+  local vimrcdir="amix-vimrc"
+  local amixvimrc_url="https://github.com/amix/vimrc"
+  [[ ! -d amix-vimrc ]] && git clone $amixvimrc_url $vimrcdir
+  cmd_runtimepath="cat ${vimrcdir}/install_awesome_vimrc.sh | 
+                  grep runtimepath | 
+                  sed 's/.*runtimepath.*=//g'
+                   "
+  runtimepath=`echo ${cmd_runtimepath} | sh`
   runtimepath=`getpath ${runtimepath}`
   echo "Now clean your home vim files, rm -rf ~/.vim*, Ctrl+C to abort now"
   read answer
@@ -65,11 +72,16 @@ function base() {
 #@param void
 #@return void
 function full() {
-  local cmd_runtimepath="cat amix-vimrc/install_awesome_vimrc.sh | 
-                        grep runtimepath | 
-                        sed 's/.*runtimepath.*=//g'
-                        "
-  local runtimepath=`echo ${cmd_runtimepath} | sh`
+  local cmd_runtimepath=""
+  local runtimepath=""
+  local vimrcdir="amix-vimrc"
+  local amixvimrc_url="https://github.com/amix/vimrc"
+  [[ ! -d amix-vimrc ]] && git clone $amixvimrc_url $vimrcdir
+  cmd_runtimepath="cat ${vimrcdir}/install_awesome_vimrc.sh | 
+                  grep runtimepath | 
+                  sed 's/.*runtimepath.*=//g'
+                   "
+  runtimepath=`echo ${cmd_runtimepath} | sh`
   runtimepath=`getpath ${runtimepath}`
   echo "Now clean your home vim files, rm -rf ~/.vim*, Ctrl+C to abort now"
   read answer
