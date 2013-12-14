@@ -1,3 +1,7 @@
+""" version: 1.0
+""" author: viticm(viticm.ti@gmail.com)
+""" date: 2013-12-14
+
 "not left margin
 set foldcolumn=0
 
