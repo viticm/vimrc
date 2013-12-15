@@ -117,10 +117,9 @@ function plugin() {
         error_message "plugin url${pluginurl} not found the name"
       fi
       plugindir="${currentdir}/sources_non_forked/"
-      check=`find $plugindir/${pluginname} -type d -name .git`
 
       echo "update ${pluginname}"
-      if [[ "" == $check ]] ; then
+      if [[ ! -d ${plugindir}/${pluginname}/.git ]] ; then
         mkdir -p ${tmpdir}
         cmd=`cd $tmpdir && git clone $pluginurl`
         cp ${tmpdir}/${pluginname} ${plugindir} -r
