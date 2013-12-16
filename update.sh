@@ -88,7 +88,7 @@ function vimrc() {
     git pull --rebase
   else
     git clone git://github.com/amix/vimrc.git $tmpdir
-    cp $tmpdir ./ -r
+    cp $tmpdir/* ./ -r
   fi
   rm -rf $tmpdir
 }
