@@ -33,6 +33,7 @@ vim-multiple-cursors https://github.com/terryma/vim-multiple-cursors
 vim-fugitive https://github.com/tpope/vim-fugitive
 vim-airline https://github.com/bling/vim-airline
 vimerl https://github.com/jimenezrick/vimerl
+neocomplete.vim https://github.com/Shougo/neocomplete.vim
 "
 clean_plugindir="no" #update plugin will delete the old dir
 
