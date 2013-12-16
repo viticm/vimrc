@@ -75,3 +75,8 @@ if has("cscope")
   endif
   set csverb
 endif
+
+"for taglist
+let g:Tlist_Use_Right_Window = 1
+let g:Tlist_Enable_Fold_Column = 0
+let g:Tlist_Exit_OnlyWindow = 1
