@@ -80,7 +80,7 @@ endif
 let g:Tlist_Use_Right_Window = 1
 let g:Tlist_Enable_Fold_Column = 0
 let g:Tlist_Exit_OnlyWindow = 1
-map <F9> :Tlist<cr> 
+map <F9> :Tlist<CR>
 
 "NERD Tree
 let NERDChristmasTree=1
@@ -101,3 +101,7 @@ set termencoding=utf-8
 
 "neocomplete
 let g:neocomplete#enable_at_startup = 1
+let g:acp_enableAtStartup = 0
+let g:neocomplete#enable_smart_case = 1
+let g:neocomplete#sources#include#max_processes = 0
+map <F10> :NeoCompleteToggle<CR>
