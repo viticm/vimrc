@@ -51,10 +51,10 @@ hi StatusLine term=bold,underline cterm=underline,bold gui=bold, ctermfg=yellow
 hi StatusLineNC term=bold,underline cterm=underline,bold gui=bold, ctermfg=yellow
 
 "for cscope
-nmap fc :cs find c <C-R>=expand("<cword>")<CR><CR> 
-nmap fs :cs find s <C-R>=expand("<cword>")<CR><CR> 
+nmap fc :cs find c <C-R>=expand("<cword>")<CR><CR>
+nmap fs :cs find s <C-R>=expand("<cword>")<CR><CR>
 nmap fg :cs find g <C-R>=expand("<cword>")<CR><CR>
-nmap fc :cs find c <C-R>=expand("<cword>")<CR><CR> 
+nmap fc :cs find c <C-R>=expand("<cword>")<CR><CR>
 nmap ft :cs find t <C-R>=expand("<cword>")<CR><CR>
 nmap fe :cs find e <C-R>=expand("<cword>")<CR><CR>
 nmap ff :cs find f <C-R>=expand("<cfile>")<CR><CR>
