@@ -92,7 +92,6 @@ let NERDTreeShowHidden=1
 let NERDTreeShowLineNumbers=1
 let NERDTreeWinPos='left'
 let NERDTreeWinSize=31
-nnoremap f :NERDTreeToggle
 
 "file codings
 set encoding=utf-8
