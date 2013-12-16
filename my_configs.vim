@@ -80,3 +80,16 @@ endif
 let g:Tlist_Use_Right_Window = 1
 let g:Tlist_Enable_Fold_Column = 0
 let g:Tlist_Exit_OnlyWindow = 1
+map <F9> :Tlist<cr> 
+
+"NERD Tree
+let NERDChristmasTree=1
+let NERDTreeAutoCenter=1
+let NERDTreeMouseMode=2
+let NERDTreeShowBookmarks=1
+let NERDTreeShowFiles=1
+let NERDTreeShowHidden=1
+let NERDTreeShowLineNumbers=1
+let NERDTreeWinPos='left'
+let NERDTreeWinSize=31
+nnoremap f :NERDTreeToggle
