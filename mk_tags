@@ -3,7 +3,7 @@
 #@date 2013-12-9 13:53:44
 #@author viticm<viticm@126.com>
 paths="./"
-types="php lua h cpp c cc hpp erl"
+types="php lua h cpp c cc hpp erl hrl"
 n=0
 for path in ${paths}
 do
