@@ -78,6 +78,17 @@ function getpath() {
   echo ${newpath}
 }
 
+#fix some bug for all
+#@param string vim runtimepath
+#@return void
+function fixbug() {
+  local runtimepath=${1}
+  if [[ "" != $runtimepath ]] ; then
+    sed -i 's;!nerdtree#runningWindows();nerdtree#runningWindows();g' \
+      ${runtimepath}/sources_non_forked/nerdtree/plugin/NERD_tree.vim
+  fi
+}
+
 #update vimrc(amix)
 #@param void
 #@return void
@@ -91,6 +102,7 @@ function vimrc() {
     cp $tmpdir/* ./ -r
   fi
   rm -rf $tmpdir
+  fixbug ./
 }
 
 #full install vimrc
@@ -134,6 +146,7 @@ function plugin() {
   done
   echo -e "all plugins is update"
   rm -rf $tmpdir
+  fixbug ./
 }
 
 #the script main function, like c/c++

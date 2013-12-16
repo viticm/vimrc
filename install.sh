@@ -31,10 +31,21 @@ function error_message() {
 
 #print warning message, yellow words
 #@param message
-#@return void
+#@return string void
 function warning_message() {
   local message=${1}
   echo -e "\e[0;33;1merror:${message}\e[0m"
+}
+
+#fix some bug for all
+#@param string vim runtimepath
+#@return void
+function fixbug() {
+  local runtimepath=${1}
+  if [[ "" != $runtimepath ]] ; then
+    sed -i 's;!nerdtree#runningWindows();nerdtree#runningWindows();g' \
+      ${runtimepath}/sources_non_forked/nerdtree/plugin/NERD_tree.vim
+  fi
 }
 
 #get format path
@@ -71,6 +82,7 @@ function base() {
   cp amix-vimrc ${runtimepath} -r
   sh ${runtimepath}/install_basic_vimrc.sh
   cp ${currentdir}/update.sh ${runtimepath}
+  fixbug $runtimepath
 }
 
 #full install vimrc
@@ -96,6 +108,7 @@ function full() {
   sh ${runtimepath}/install_awesome_vimrc.sh
   cp ${currentdir}/my_configs.vim ${runtimepath}
   cp ${currentdir}/update.sh ${runtimepath}
+  fixbug $runtimepath
 }
 
 #update vimrc
