@@ -60,3 +60,18 @@ nmap fe :cs find e <C-R>=expand("<cword>")<CR><CR>
 nmap ff :cs find f <C-R>=expand("<cfile>")<CR><CR> 
 nmap fi :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
 nmap fd :cs find d <C-R>=expand("<cword>")<CR><CR>
+
+if has("cscope")
+  set csprg=/usr/bin/cscope
+  set csto=1
+  set cst
+  set nocsverb
+  " add any database in current directory
+  if filereadable("cscope.out")
+    cs add cscope.out
+  " else add database pointed to by environment
+  elseif $CSCOPE_DB != ""
+    cs add $CSCOPE_DB
+  endif
+  set csverb
+endif
