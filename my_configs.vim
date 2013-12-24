@@ -97,6 +97,7 @@ let NERDTreeWinSize=31
 set encoding=utf-8
 set fileencodings=ucs-bom,utf-8,cp936
 set fileencoding=gb2312
+set fileencoding=gbk
 set termencoding=utf-8
 
 "neocomplete
