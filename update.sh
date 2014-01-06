@@ -94,7 +94,7 @@ function fixbug() {
 #@param void
 #@return void
 function vimrc() {
-  local gitstatus=`find ./ -type d -name .git`
+  local gitstatus=`find ./ -maxdepth 1 -type d -name .git`
   local tmpdir="${HOME}/tmp_vimrc"
   if [[ "" != $gitstatus ]] ; then
     git pull --rebase
