@@ -95,10 +95,7 @@ let NERDTreeWinSize=31
 
 "file codings
 set encoding=utf-8
-set fileencodings=ucs-bom,utf-8,cp936
-set fileencoding=gb2312
-set fileencoding=gbk
-set termencoding=utf-8
+set fileencodings=ucs-bom,utf-8,cp936,gbk,gb2312
 
 "neocomplete
 let g:neocomplete#enable_at_startup = 1
