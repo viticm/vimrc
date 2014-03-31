@@ -103,6 +103,7 @@ function full() {
   echo "Now clean your home vim files, rm -rf ~/.vim*, Ctrl+C to abort now"
   read answer
   rm -rf ${HOME}/*.vim
+  rm -rf ${HOME}/.vim*
   rm -rf ${runtimepath}
   cp amix-vimrc ${runtimepath} -r
   sh ${runtimepath}/install_awesome_vimrc.sh
