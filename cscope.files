@@ -1,0 +1,5 @@
+./amix-vimrc/sources_non_forked/vimerl/compiler/erlang_check.erl
+./amix-vimrc/sources_non_forked/vimerl/test/test_tabs.erl
+./amix-vimrc/sources_non_forked/vimerl/test/test_spaces.erl
+./amix-vimrc/sources_non_forked/vimerl/autoload/erlang_complete.erl
+./amix-vimrc/sources_non_forked/vimerl/indent/erlang_indent.erl

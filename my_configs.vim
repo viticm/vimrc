@@ -1,6 +1,6 @@
-""" version: 1.0
+""" version: 1.1
 """ author: viticm(viticm.ti@gmail.com)
-""" date: 2013-12-14
+""" date: 2014-5-20
 
 "not left margin
 set foldcolumn=0
@@ -23,7 +23,7 @@ set nowrap
 set colorcolumn=80
 set nu
 map <F4> :NERDTreeToggle<cr>
-map <F11> :!./mk_tags<CR>
+map <F11> :!sh ./mk_tags<CR>
 map <F12> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
 nmap csr :cs reset <C-R>=expand("<cword>")<CR><CR>
 
@@ -93,9 +93,6 @@ let NERDTreeShowLineNumbers=1
 let NERDTreeWinPos='left'
 let NERDTreeWinSize=31
 
-"file codings
-set encoding=utf-8
-set fileencodings=ucs-bom,utf-8,cp936,gbk,gb2312
 
 "neocomplete
 let g:neocomplete#enable_at_startup = 1
@@ -103,3 +100,26 @@ let g:acp_enableAtStartup = 0
 let g:neocomplete#enable_smart_case = 1
 let g:neocomplete#sources#include#max_processes = 0
 map <F10> :NeoCompleteToggle<CR>
+
+"multi language
+if has("multi_byte") 
+  "utf-8
+  set termencoding=utf-8 
+  set formatoptions+=mM 
+  set fencs=utf-8,gbk 
+  
+  "file codings
+  set encoding=utf-8
+  set fileencodings=ucs-bom,utf-8,cp936,gbk,gb2312
+ 
+  if v:lang =~? '^/(zh/)/|/(ja/)/|/(ko/)' 
+     set ambiwidth=double 
+  endif 
+  if has("win32") 
+    source $VIMRUNTIME/delmenu.vim 
+    source $VIMRUNTIME/menu.vim 
+    language messages zh_CN.utf-8 
+  endif 
+else 
+  echoerr "Sorry, this version of (g)vim was not compiled with +multi_byte" 
+endif
