@@ -42,9 +42,16 @@ function warning_message() {
 #@return void
 function fixbug() {
   local runtimepath=${1}
+  local is_win32=false
+  if [[ `uname | grep W32_NT` != "" ]] ; then
+    is_win32=true
+  fi
+
   if [[ "" != $runtimepath ]] ; then
-    sed -i 's;!nerdtree#runningWindows();nerdtree#runningWindows();g' \
-      ${runtimepath}/sources_non_forked/nerdtree/plugin/NERD_tree.vim
+    if ! $is_win32 ; then #bug of linux
+      sed -i 's;!nerdtree#runningWindows();nerdtree#runningWindows();g' \
+        ${runtimepath}/sources_non_forked/nerdtree/plugin/NERD_tree.vim
+    fi
   fi
 }
 
