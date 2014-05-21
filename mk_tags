@@ -7,8 +7,9 @@ types="php lua h cpp c cc hpp erl hrl"
 n=0
 
 is_win32=false
+ENV_PATH="F:\tools\editor\vim\vim74"
 if [[ `uname | grep W32_NT` != "" ]] ; then
-  export PATH="F:\tools\editor\myvim\vim74"
+  export PATH=$ENV_PATH
 fi
 
 for path in ${paths}
