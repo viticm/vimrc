@@ -9,6 +9,7 @@ n=0
 is_win32=false
 ENV_PATH="F:\tools\editor\vim\vim74"
 if [[ `uname | grep W32_NT` != "" ]] ; then
+  is_win32=true
   export PATH=$ENV_PATH
 fi
 
@@ -35,8 +36,8 @@ do
 done
 
 if $is_win32 ; then
-  if [[ -f ./cscope.out ]] ; then
-    echo "please close gvim and del current cscope.out, then try angin"
+  if [ -f ./cscope.out ] ; then
+    echo "please close gvim and delete current cscope.out, then try angin."
     exit 1
   fi
   cscope -bk -i cscope.files
