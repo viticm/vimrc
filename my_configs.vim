@@ -62,7 +62,7 @@ nmap fi :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
 nmap fd :cs find d <C-R>=expand("<cword>")<CR><CR>
 
 if has("cscope")
-  set csprg=/usr/bin/cscope
+  "set csprg=/usr/bin/cscope
   set csto=1
   set cst
   set nocsverb

@@ -8,16 +8,12 @@ n=0
 
 is_win32=false
 if [[ `uname | grep W32_NT` != "" ]] ; then
-  is_win32=true
+  export PATH="F:\tools\editor\myvim\vim74"
 fi
 
 for path in ${paths}
 do
-  if $is_win32 ; then
-    cmd="find_ ${path}"
-  else 
-    cmd="find ${path}"
-  fi
+  cmd="find ${path}"
   i=0
   for filetype in ${types} 
   do
@@ -37,5 +33,13 @@ do
   ((++n))
 done
 
-cscope -bkq -i cscope.files
+if $is_win32 ; then
+  if [[ -f ./cscope.out ]] ; then
+    echo "please close gvim and del current cscope.out, then try angin"
+    exit 1
+  fi
+  cscope -bk -i cscope.files
+else
+  cscope -bkq -i cscope.files
+fi
 ctags -R
