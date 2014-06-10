@@ -125,8 +125,9 @@ else
 endif
 
 "add source file description
-map <F3> :call generate_file_decription()<cr>'s
-function add_file_decription()
+map <F6> :call GenerateFileDecription()<cr>
+
+function AddFileDecription()
   call append(0, "/**")
   call append(1, " * PAP Engine ( https://github.com/viticm/pap )")
   call append(2, " * $Id ".expand("%:t"))
@@ -137,29 +138,29 @@ function add_file_decription()
   call append(7, " * @date ".strftime("%Y/%m/%d %H:%M"))
   call append(8, " * @uses your description")
   call append(9, " */")
-  echohl WarningMsg | echo "Successful in adding the copyright." | echohl None
-endf
+  echohl WarningMsg | echo "Successful in adding the source file decription." | echohl None
+endfunction
 
 "update source file description
-function update_file_decription()
+function UpdateFileDecription()
   normal m'
-  execute ' * @date /s@:.*$@\=strftime(":%Y-%m-%d %H:%M")@'
+  execute '/ * @date /s@.*$@\=" * \@date ".strftime("%Y/%m/%d %H:%M")@'
   normal ''
   normal mk
-  execute ' * $Id /s@:.*$@\=":".expand("%:t")@'
+  execute '/ * $Id /s@.*$@\=" * $Id ".expand("%:t")@'
   execute "noh"
   normal 'k
   echohl WarningMsg | echo "Successful in updating the source file description." | echohl None
 endfunction
 
-"generate file decription
-function generate_file_decription()
-  let n = 2
-    let line = getline(n)
-    let str = '^ * @copyright Copyright $'
-    if line =~ str
-      call update_file_decription()
-      return
-    endif
-  call add_file_decription()
+"generate source file decription
+function GenerateFileDecription()
+  let n = 6
+  let line = getline(n)
+  let str = ' * @license'
+  if line == str
+    call UpdateFileDecription()
+    return
+  endif
+  call AddFileDecription()
 endfunction
