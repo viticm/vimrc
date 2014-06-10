@@ -123,3 +123,44 @@ if has("multi_byte")
 else 
   echoerr "Sorry, this version of (g)vim was not compiled with +multi_byte" 
 endif
+
+"add source file description
+map <F3> :call TitleDet()<cr>'s
+function add_file_decription()
+  call append(0, "/**")
+  call append(1, " * PAP Engine ( https://github.com/viticm/pap )")
+  call append(2, " * $Id ".expand("%:t"))
+  call append(3, " * @link https://github.com/viticm/pap for the canonical source repository")
+  call append(4, " * @copyright Copyright (c) 2013-2013 viticm( viticm@126.com )")
+  call append(5, " * @license")
+  call append(6, " * @user viticm<viticm@126.com>")
+  call append(7, " * @date ".strftime("%Y/%m/%d %H:%M"))
+  call append(8, " * @uses your description")
+  call append(9, " */")
+  echohl WarningMsg | echo "Successful in adding the copyright." | echohl None
+endf
+
+"update source file description
+function update_file_decription()
+  normal m'
+  execute ' * @date /s@:.*$@\=strftime(":%Y-%m-%d %H:%M")@'
+  normal ''
+  normal mk
+  execute ' * $Id /s@:.*$@\=":".expand("%:t")@'
+  execute "noh"
+  normal 'k
+  echohl WarningMsg | echo "Successful in updating the source file description." | echohl None
+endfunction
+
+"generate file decription
+function generate_file_decription()
+    let n = 2
+    "Ä¬ÈÏÎªÌí¼Ó
+        let line = getline(n)
+        let str = '^#       COPYRIGHT NOTICE$'
+        if line =~ str
+            call UpdateTitle()
+            return
+        endif
+    call AddTitle()
+endfunction
