@@ -125,13 +125,13 @@ else
 endif
 
 "add source file description
-map <F3> :call TitleDet()<cr>'s
+map <F3> :call generate_file_decription()<cr>'s
 function add_file_decription()
   call append(0, "/**")
   call append(1, " * PAP Engine ( https://github.com/viticm/pap )")
   call append(2, " * $Id ".expand("%:t"))
   call append(3, " * @link https://github.com/viticm/pap for the canonical source repository")
-  call append(4, " * @copyright Copyright (c) 2013-2013 viticm( viticm@126.com )")
+  call append(4, " * @copyright Copyright (c) 2014- viticm( viticm@126.com )")
   call append(5, " * @license")
   call append(6, " * @user viticm<viticm@126.com>")
   call append(7, " * @date ".strftime("%Y/%m/%d %H:%M"))
@@ -154,13 +154,12 @@ endfunction
 
 "generate file decription
 function generate_file_decription()
-    let n = 2
-    "Ä¬ÈÏÎªÌí¼Ó
-        let line = getline(n)
-        let str = '^#       COPYRIGHT NOTICE$'
-        if line =~ str
-            call UpdateTitle()
-            return
-        endif
-    call AddTitle()
+  let n = 2
+    let line = getline(n)
+    let str = '^ * @copyright Copyright $'
+    if line =~ str
+      call update_file_decription()
+      return
+    endif
+  call add_file_decription()
 endfunction
