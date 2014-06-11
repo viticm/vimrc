@@ -127,17 +127,17 @@ endif
 "add source file description
 map <F6> :call GenerateFileDecription()<cr>
 
-function AddFileDecription()
-  call append(0, "/**")
-  call append(1, " * PAP Engine ( https://github.com/viticm/pap )")
-  call append(2, " * $Id ".expand("%:t"))
-  call append(3, " * @link https://github.com/viticm/pap for the canonical source repository")
-  call append(4, " * @copyright Copyright (c) 2014- viticm( viticm@126.com )")
-  call append(5, " * @license")
-  call append(6, " * @user viticm<viticm@126.com>")
-  call append(7, " * @date ".strftime("%Y/%m/%d %H:%M"))
-  call append(8, " * @uses your description")
-  call append(9, " */")
+function AddFileDecription(add_line)
+  call append(0 + a:add_line, "/**")
+  call append(1 + a:add_line, " * PAP Engine ( https://github.com/viticm/pap )")
+  call append(2 + a:add_line, " * $Id ".expand("%:t"))
+  call append(3 + a:add_line, " * @link https://github.com/viticm/pap for the canonical source repository")
+  call append(4 + a:add_line, " * @copyright Copyright (c) 2014- viticm( viticm@126.com )")
+  call append(5 + a:add_line, " * @license")
+  call append(6 + a:add_line, " * @user viticm<viticm@126.com>")
+  call append(7 + a:add_line, " * @date ".strftime("%Y/%m/%d %H:%M"))
+  call append(8 + a:add_line, " * @uses your description")
+  call append(9 + a:add_line, " */")
   echohl WarningMsg | echo "Successful in adding the source file decription." | echohl None
 endfunction
 
@@ -155,12 +155,17 @@ endfunction
 
 "generate source file decription
 function GenerateFileDecription()
-  let n = 6
-  let line = getline(n)
+  let add_line = 0
+  let extend_name = expand("%:e") "for diffrent file type
+  if extend_name == "php"
+    let add_line = 1
+  endif
+  let check_line = 6 + add_line
+  let line = getline(check_line)
   let str = ' * @license'
   if line == str
     call UpdateFileDecription()
     return
   endif
-  call AddFileDecription()
+  call AddFileDecription(add_line)
 endfunction
