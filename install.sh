@@ -24,8 +24,8 @@ EOF
 #@param string message
 #@return void
 function error_message() {
-  local message=${1}
-  echo -e "\e[0;31;1merror:${message}\e[0m"
+  local message=${@}
+  echo -e "\e[0;31;1merror: ${message}\e[0m"
   exit 1
 }
 
@@ -33,8 +33,8 @@ function error_message() {
 #@param message
 #@return string void
 function warning_message() {
-  local message=${1}
-  echo -e "\e[0;33;1merror:${message}\e[0m"
+  local message=${@}
+  echo -e "\e[0;33;1mwarning: ${message}\e[0m"
 }
 
 #fix some bug for all
