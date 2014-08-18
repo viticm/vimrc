@@ -127,27 +127,35 @@ endif
 "add source file description
 map <F6> :call GenerateFileDecription()<cr>
 
-function AddFileDecription(add_line)
-  call append(0 + a:add_line, "/**")
-  call append(1 + a:add_line, " * PAP Engine ( https://github.com/viticm/pap )")
-  call append(2 + a:add_line, " * $Id ".expand("%:t"))
-  call append(3 + a:add_line, " * @link https://github.com/viticm/pap for the canonical source repository")
-  call append(4 + a:add_line, " * @copyright Copyright (c) 2014- viticm( viticm@126.com )")
-  call append(5 + a:add_line, " * @license")
-  call append(6 + a:add_line, " * @user viticm<viticm@126.com>")
-  call append(7 + a:add_line, " * @date ".strftime("%Y/%m/%d %H:%M"))
-  call append(8 + a:add_line, " * @uses your description")
-  call append(9 + a:add_line, " */")
+function AddFileDecription(add_line, notechar)
+  let begin = "/**"
+  let body = " * "
+  let end = "*/"
+  if "-" == a:notechar
+    let begin = "--[["
+    let body = " - "
+    let end = "--]]"
+  endif
+  call append(0 + a:add_line, begin)
+  call append(1 + a:add_line, body."PAP Engine ( https://github.com/viticm/pap )")
+  call append(2 + a:add_line, body."$Id ".expand("%:t"))
+  call append(3 + a:add_line, body."@link https://github.com/viticm/pap for the canonical source repository")
+  call append(4 + a:add_line, body."@copyright Copyright (c) 2014- viticm( viticm@126.com )")
+  call append(5 + a:add_line, body."@license")
+  call append(6 + a:add_line, body."@user viticm<viticm@126.com>")
+  call append(7 + a:add_line, body."@date ".strftime("%Y/%m/%d %H:%M"))
+  call append(8 + a:add_line, body."@uses your description")
+  call append(9 + a:add_line, end)
   echohl WarningMsg | echo "Successful in adding the source file decription." | echohl None
 endfunction
 
 "update source file description
-function UpdateFileDecription()
+function UpdateFileDecription(notechar)
   normal m'
-  execute '/ * @date /s@.*$@\=" * \@date ".strftime("%Y/%m/%d %H:%M")@'
+  execute '/ '.a:notechar.' @date /s@.*$@\=" '.a:notechar.' \@date ".strftime("%Y/%m/%d %H:%M")@'
   normal ''
   normal mk
-  execute '/ * $Id /s@.*$@\=" * $Id ".expand("%:t")@'
+  execute '/ '.a:notechar.' $Id /s@.*$@\=" '.a:notechar.' $Id ".expand("%:t")@'
   execute "noh"
   normal 'k
   echohl WarningMsg | echo "Successful in updating the source file description." | echohl None
@@ -157,15 +165,19 @@ endfunction
 function GenerateFileDecription()
   let add_line = 0
   let extend_name = expand("%:e") "for diffrent file type
+  let notechar = "*"
   if extend_name == "php"
     let add_line = 1
   endif
+  if "lua" == extend_name
+    let notechar = "-"
+  endif
   let check_line = 6 + add_line
   let line = getline(check_line)
-  let str = ' * @license'
+  let str = ' '.notechar.' @license'
   if line == str
-    call UpdateFileDecription()
+    call UpdateFileDecription(notechar)
     return
   endif
-  call AddFileDecription(add_line)
+  call AddFileDecription(add_line, notechar)
 endfunction
