@@ -94,7 +94,6 @@ function fixbug() {
 #@param void
 #@return void
 function vimrc() {
-  cd $currentdir/amix-vimrc #for vimrc dir
   local gitstatus=`find ./ -maxdepth 1 -type d -name .git`
   local tmpdir="${HOME}/tmp_vimrc"
   if [[ "" != $gitstatus ]] ; then
@@ -115,7 +114,7 @@ function plugin() {
   if [[ 0 == $? ]] ; then
     exit 0
   fi
-#if python update if failed, then use shell update
+#if python update failed, then use shell update
   warning_message "python update plugin failed, now use shell"
   tmpdir="${currentdir}/tmp_plugin"
   rm -rf $tmpdir
