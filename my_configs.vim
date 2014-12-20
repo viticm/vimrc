@@ -181,3 +181,5 @@ function GenerateFileDecription()
   endif
   call AddFileDecription(add_line, notechar)
 endfunction
+"set filetype for extends files
+"au BufRead,BufNewFile *.txt set filetype=lua
