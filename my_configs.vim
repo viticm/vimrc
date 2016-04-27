@@ -183,3 +183,7 @@ function GenerateFileDecription()
 endfunction
 "set filetype for extends files
 "au BufRead,BufNewFile *.txt set filetype=lua
+
+"For c++11, if you want check in source then open it.
+"let g:syntastic_cpp_compiler = 'g++'
+"let g:syntastic_cpp_compiler_options = ' -std=c++11 -stdlib=libc++'
