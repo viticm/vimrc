@@ -137,7 +137,7 @@ function AddFileDecription(add_line, notechar)
     let end = "--]]"
   endif
   call append(0 + a:add_line, begin)
-  call append(1 + a:add_line, body."PAP Engine ( https://github.com/viticm/plainframework )")
+  call append(1 + a:add_line, body."PLAIN FRAMEWORK ( https://github.com/viticm/plainframework )")
   call append(2 + a:add_line, body."$Id ".expand("%:t"))
   call append(3 + a:add_line, body."@link https://github.com/viticm/plainframework for the canonical source repository")
   call append(4 + a:add_line, body."@copyright Copyright (c) 2014- viticm( viticm.ti@gmail.com )")
