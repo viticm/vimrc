@@ -50,27 +50,6 @@ snippet esc
 # comment
 snippet //
 	<!-- ${1} -->${0}
-# Generic Doctype
-snippet doctype HTML 4.01 Strict
-	<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-	"http://www.w3.org/TR/html4/strict.dtd">
-snippet doctype HTML 4.01 Transitional
-	<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-	"http://www.w3.org/TR/html4/loose.dtd">
-snippet doctype HTML 5
-	<!DOCTYPE HTML>
-snippet doctype XHTML 1.0 Frameset
-	<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-snippet doctype XHTML 1.0 Strict
-	<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-snippet doctype XHTML 1.0 Transitional
-	<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-snippet doctype XHTML 1.1
-	<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
-	"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 # HTML Doctype 4.01 Strict
 snippet docts
 	<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
@@ -241,16 +220,13 @@ snippet code
 	<code>${0}</code>
 snippet col
 	<col>
-snippet col+
-	<col>
-	col+
 snippet colgroup
 	<colgroup>
 		${0}
 	</colgroup>
 snippet colgroup+
 	<colgroup>
-		<col />
+		<col>
 		col+${0}
 	</colgroup>
 snippet command
@@ -550,8 +526,6 @@ snippet ins
 	<ins>${0}</ins>
 snippet kbd
 	<kbd>${0}</kbd>
-snippet keygen
-	<keygen>${0}</keygen>
 snippet label
 	<label for="${0:$1}">${1}</label>
 snippet label:i
@@ -610,7 +584,7 @@ snippet map#
 	</map>
 snippet map+
 	<map name="${1}">
-		<area shape="${2}" coords="${3}" href="${4}" alt="${5}">${6}
+		<area shape="${2}" coords="${3}" href="${4}" alt="${5}" />${6}
 	</map>
 snippet mark
 	<mark>${0}</mark>
@@ -664,7 +638,7 @@ snippet object
 snippet movie
 	<object width="$2" height="$3" classid="clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B"
 	codebase="http://www.apple.com/qtactivex/qtplugin.cab">
-		<param name="src" value="$1" />
+		<param name="src" value="$1">
 		<param name="controller" value="$4">
 		<param name="autoplay" value="$5">
 		<embed src="${1:movie.mov}"
@@ -735,7 +709,7 @@ snippet samp
 		${0}
 	</samp>
 snippet script
-	<script type="text/javascript" charset="utf-8">
+	<script charset="utf-8">
 		${0}
 	</script>
 snippet scripts
@@ -745,7 +719,7 @@ snippet scriptt
 		${0}
 	</script>
 snippet scriptsrc
-	<script src="${0}.js" type="text/javascript" charset="utf-8"></script>
+	<script src="${0}.js" charset="utf-8"></script>
 snippet section
 	<section>
 		${0}
@@ -853,7 +827,7 @@ snippet tr+
 		td+${0}
 	</tr>
 snippet track
-	<track src="${1}" srclang="${2}" label="${3}" default="${4:default}>${5}</track>
+	<track src="${1}" srclang="${2}" label="${3}" default="${4:default}>${5}
 snippet ul
 	<ul>
 		${0}
@@ -874,6 +848,10 @@ snippet ul+
 snippet var
 	<var>${0}</var>
 snippet video
-	<video src="${1} height="${2}" width="${3}" preload="${5:none}" autoplay="${6:autoplay}>${7}</video>
+	<video src="${1}" height="${2}" width="${3}" preload="${4:none}" autoplay="${5:autoplay}">${6}</video>
+snippet video.
+	<video class="${1}" src="${2}" height="${3}" width="${4}" preload="${5:none}" autoplay="${6:autoplay}">${7}</video>
 snippet wbr
 	<wbr>
+snippet viewport
+	<meta name="viewport" content="width=device-width, initial-scale=1">

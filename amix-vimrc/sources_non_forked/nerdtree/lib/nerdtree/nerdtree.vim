@@ -20,8 +20,8 @@ function! s:NERDTree.changeRoot(node)
     call self.root.open()
 
     "change dir to the dir of the new root if instructed to
-    if g:NERDTreeChDirMode ==# 2
-        exec "cd " . self.root.path.str({'format': 'Edit'})
+    if g:NERDTreeChDirMode >= 2
+        call self.root.path.changeToDir()
     endif
 
     call self.render()
@@ -38,17 +38,26 @@ function! s:NERDTree.Close()
     endif
 
     if winnr("$") != 1
+        " Use the window ID to identify the currently active window or fall
+        " back on the buffer ID if win_getid/win_gotoid are not available, in
+        " which case we'll focus an arbitrary window showing the buffer.
+        let l:useWinId = exists('*win_getid') && exists('*win_gotoid')
+
         if winnr() == s:NERDTree.GetWinNum()
-            call nerdtree#exec("wincmd p")
-            let bufnr = bufnr("")
-            call nerdtree#exec("wincmd p")
+            call nerdtree#exec("wincmd p", 1)
+            let l:activeBufOrWin = l:useWinId ? win_getid() : bufnr("")
+            call nerdtree#exec("wincmd p", 1)
         else
-            let bufnr = bufnr("")
+            let l:activeBufOrWin = l:useWinId ? win_getid() : bufnr("")
         endif
 
-        call nerdtree#exec(s:NERDTree.GetWinNum() . " wincmd w")
-        close
-        call nerdtree#exec(bufwinnr(bufnr) . " wincmd w")
+        call nerdtree#exec(s:NERDTree.GetWinNum() . " wincmd w", 1)
+        call nerdtree#exec("close", 0)
+        if l:useWinId
+            call nerdtree#exec("call win_gotoid(" . l:activeBufOrWin . ")", 0)
+        else
+            call nerdtree#exec(bufwinnr(l:activeBufOrWin) . " wincmd w", 0)
+        endif
     else
         close
     endif
@@ -57,7 +66,7 @@ endfunction
 "FUNCTION: s:NERDTree.CloseIfQuitOnOpen() {{{1
 "Closes the NERD tree window if the close on open option is set
 function! s:NERDTree.CloseIfQuitOnOpen()
-    if g:NERDTreeQuitOnOpen && s:NERDTree.IsOpen()
+    if nerdtree#and(g:NERDTreeQuitOnOpen,1) && s:NERDTree.IsOpen()
         call s:NERDTree.Close()
     endif
 endfunction
@@ -89,7 +98,7 @@ endfunction
 "Places the cursor in the nerd tree window
 function! s:NERDTree.CursorToTreeWin()
     call g:NERDTree.MustBeOpen()
-    call nerdtree#exec(g:NERDTree.GetWinNum() . "wincmd w")
+    call nerdtree#exec(g:NERDTree.GetWinNum() . "wincmd w", 1)
 endfunction
 
 " Function: s:NERDTree.ExistsForBuffer()   {{{1
@@ -139,6 +148,13 @@ function! s:NERDTree.GetWinNum()
         return bufwinnr(t:NERDTreeBufName)
     endif
 
+    " If WindowTree, there is no t:NERDTreeBufName variable. Search all windows.
+    for w in range(1,winnr('$'))
+        if bufname(winbufnr(w)) =~# '^' . g:NERDTreeCreator.BufNamePrefix() . '\d\+$'
+            return w
+        endif
+    endfor
+
     return -1
 endfunction
 
@@ -186,8 +202,14 @@ function! s:NERDTree.previousBuf()
     return self._previousBuf
 endfunction
 
+function! s:NERDTree.setPreviousBuf(bnum)
+    let self._previousBuf = a:bnum
+endfunction
+
 "FUNCTION: s:NERDTree.render() {{{1
 "A convenience function - since this is called often
 function! s:NERDTree.render()
     call self.ui.render()
 endfunction
+
+" vim: set sw=4 sts=4 et fdm=marker:
