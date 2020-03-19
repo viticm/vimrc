@@ -34,6 +34,11 @@ vim-fugitive https://github.com/tpope/vim-fugitive
 vim-airline https://github.com/bling/vim-airline
 vimerl https://github.com/jimenezrick/vimerl
 neocomplete.vim https://github.com/Shougo/neocomplete.vim
+vim-dispatch https://github.com/tpope/vim-dispatch
+vim-projectionist https://github.com/tpope/vim-projectionist
+vim-composer https://github.com/noahfrederick/vim-composer
+vim-laravel https://github.com/noahfrederick/vim-laravel
+vim-blade https://github.com/jwalton512/vim-blade
 "
 clean_plugindir="no" #update plugin will delete the old dir
 
@@ -161,7 +166,7 @@ function main() {
   esac
 }
 if [[ "" == ${@} ]] ; then
-  error_message "${0}: no commond specified.You can use <${0} --help> 
+  error_message "${0}: no commond specified.You can use <${0} --help>
                 get parameters for this script."
 else
   main "${@}"
