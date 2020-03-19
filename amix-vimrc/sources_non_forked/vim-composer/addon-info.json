@@ -1,0 +1,17 @@
+{
+	"name": "composer",
+	"version": "1.0.4",
+	"author": "Noah Frederick",
+	"description": "Vim support for Composer PHP projects",
+	"homepage": "https://github.com/noahfrederick/vim-composer",
+	"repository": {
+		"type": "git",
+		"url": "git://github.com/noahfrederick/vim-composer"
+	},
+	"dependencies": {
+		"projectionist": {
+			"type": "git",
+			"url": "git://github.com/tpope/vim-projectionist"
+		}
+	}
+}
