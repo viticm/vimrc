@@ -39,6 +39,9 @@ vim-projectionist https://github.com/tpope/vim-projectionist
 vim-composer https://github.com/noahfrederick/vim-composer
 vim-laravel https://github.com/noahfrederick/vim-laravel
 vim-blade https://github.com/jwalton512/vim-blade
+vim-vue https://github.com/posva/vim-vue
+syntastic https://github.com/vim-syntastic/syntastic
+eslint-plugin-vue https://github.com/vuejs/eslint-plugin-vue
 "
 clean_plugindir="no" #update plugin will delete the old dir
 
