@@ -130,11 +130,15 @@ map <F6> :call GenerateFileDecription()<cr>
 function AddFileDecription(add_line, notechar)
   let begin = "/**"
   let body = " * "
-  let end = "*/"
+  let end = " */"
   if "-" == a:notechar
     let begin = "--[["
     let body = " - "
     let end = "--]]"
+  elseif "<" == a:notechar
+    let begin = "<!--"
+    let body = " - "
+    let end = "-->"
   endif
   call append(0 + a:add_line, begin)
   call append(1 + a:add_line, body."PLAIN FRAMEWORK ( https://github.com/viticm/plain )")
@@ -171,6 +175,8 @@ function GenerateFileDecription()
   endif
   if "lua" == extend_name
     let notechar = "-"
+  elseif "vue" == extend_name
+    let notechar = "<"
   endif
   let check_line = 6 + add_line
   let line = getline(check_line)
@@ -183,6 +189,12 @@ function GenerateFileDecription()
 endfunction
 "set filetype for extends files
 "au BufRead,BufNewFile *.txt set filetype=lua
+autocmd FileType php set ts=4
+autocmd FileType php set sw=4
+autocmd FileType php set expandtab
+autocmd FileType php set autoindent
+autocmd FileType php set colorcolumn=120
+
 
 "For c++11, if you want check in source then open it.
 let g:syntastic_cpp_compiler = 'g++'
