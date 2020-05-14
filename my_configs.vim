@@ -157,7 +157,7 @@ let s:cur_dir_name = s:GetCurDirName()
 
 let s:framework_list = {'plain': 1}
 
-"get the project name from path
+"get the project
 function! s:GetProjectName()
   if has_key(s:vproject_info, 'name')
     return s:vproject_info.name
@@ -166,7 +166,7 @@ function! s:GetProjectName()
     let first_pos = stridx(r, '-')
     let first_name = strpart(r, 0, first_pos)
     echo first_name
-    call tr(r, '-', ' ')
+    let r = tr(r, '-', ' ')
     if has_key(s:framework_list, first_name)
       let r = first_name.' FRAMEWORK '.strpart(r, first_pos + 1)
     end
@@ -174,7 +174,7 @@ function! s:GetProjectName()
   endif
 endfunction
 
-"get the project url name path from path
+"get the project uri
 function! s:GetProjectURI()
   if has_key(s:vproject_info, 'uri')
     return s:vproject_info.uri
@@ -183,7 +183,7 @@ function! s:GetProjectURI()
   endif
 endfunction
 
-"get the author info.
+"get the project author
 function! s:GetProjectAuthor()
   if has_key(s:vproject_info, 'author')
     return s:vproject_info.author
