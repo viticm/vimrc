@@ -229,11 +229,15 @@ endfunction
 
 "update source file description
 function! s:UpdateFileDecription(notechar)
+  let notechar = a:notechar
+  if '"' == notechar
+    let notechar = '\"'
+  end
   normal m'
-  execute '/ '.a:notechar.' @date /s@.*$@\=" '.a:notechar.' \@date ".strftime("%Y/%m/%d %H:%M")@'
+  execute '/ '.notechar.' @date /s@.*$@\=" '.notechar.' \@date ".strftime("%Y/%m/%d %H:%M")@'
   normal ''
   normal mk
-  execute '/ '.a:notechar.' $Id /s@.*$@\=" '.a:notechar.' $Id ".expand("%:t")@'
+  execute '/ '.notechar.' $Id /s@.*$@\=" '.notechar.' $Id ".expand("%:t")@'
   execute "noh"
   normal 'k
   echohl WarningMsg | echo "Successful in updating the source file description." | echohl None
