@@ -1,6 +1,6 @@
-""" version: 1.1
+""" version: 1.2
 """ author: viticm(viticm.ti@gmail.com)
-""" date: 2014-5-20
+""" date: 2020-5-15
 
 "not left margin
 set foldcolumn=0
@@ -13,6 +13,7 @@ set pastetoggle=<F3>
 
 "Remove indenting on empty lines
 map <F2> :%s/\s*$//g<cr>:noh<cr>''
+map <F7> :%s/;$//g<cr>:noh<cr>''
 
 "myself config
 set cinoptions=s,e0,n0,f0,{0,}0,^0,:s,=s,l0,b0,gs,hs<Plug>PeepOpens,ts,is,+s,
@@ -124,10 +125,79 @@ else
   echoerr "Sorry, this version of (g)vim was not compiled with +multi_byte" 
 endif
 
+let s:vproject_info = {}
+if filereadable('.vproject.json')
+  let s:buf = ''
+  for line in readfile('.vproject.json')
+    let s:buf .= line
+  endfor
+  let s:vproject_info = json_decode(s:buf)
+  unlet s:buf
+endif
+
 "add source file description
 map <F6> :call GenerateFileDecription()<cr>
 
-function AddFileDecription(add_line, notechar)
+"get current directory
+function! s:GetPWD()
+    return substitute(getcwd(), "", "", "g")
+endfunction
+
+"get current directory name
+function! s:GetCurDirName()
+  let cur_path = substitute(getcwd(), "", "", "g")
+  if "/" == cur_path 
+    return ""
+  endif
+  let pos = strridx(cur_path, '/')
+  return strpart(cur_path, pos + 1)
+endfunction
+
+let s:cur_dir_name = s:GetCurDirName()
+
+let s:framework_list = {'plain': 1}
+
+"get the project name from path
+function! s:GetProjectName()
+  if has_key(s:vproject_info, 'name')
+    return s:vproject_info.name
+  else
+    let r = s:GetCurDirName()
+    let first_pos = stridx(r, '-')
+    let first_name = strpart(r, 0, first_pos)
+    echo first_name
+    call tr(r, '-', ' ')
+    if has_key(s:framework_list, first_name)
+      let r = first_name.' FRAMEWORK '.strpart(r, first_pos + 1)
+    end
+    return toupper(r)
+  endif
+endfunction
+
+"get the project url name path from path
+function! s:GetProjectURI()
+  if has_key(s:vproject_info, 'uri')
+    return s:vproject_info.uri
+  else
+    return "https://github.com/viticm/".s:cur_dir_name
+  endif
+endfunction
+
+"get the author info.
+function! s:GetProjectAuthor()
+  if has_key(s:vproject_info, 'author')
+    return s:vproject_info.author
+  else
+    return "viticm( viticm.ti@gmail.com )"
+  endif
+endfunction
+
+let s:p_name = s:GetProjectName() "project name
+let s:p_author = s:GetProjectAuthor() "project author
+let s:p_uri = s:GetProjectURI() "project uri
+
+"Add file decription.
+function! s:AddFileDecription(add_line, notechar)
   let begin = "/**"
   let body = " * "
   let end = " */"
@@ -139,14 +209,18 @@ function AddFileDecription(add_line, notechar)
     let begin = "<!--"
     let body = " - "
     let end = "-->"
+  elseif '"' == a:notechar
+    let begin = '"""'
+    let body = ' " '
+    let end = '"""'
   endif
   call append(0 + a:add_line, begin)
-  call append(1 + a:add_line, body."PLAIN FRAMEWORK ( https://github.com/viticm/plain )")
+  call append(1 + a:add_line, body.s:p_name." ( ".s:p_uri." )")
   call append(2 + a:add_line, body."$Id ".expand("%:t"))
-  call append(3 + a:add_line, body."@link https://github.com/viticm/plain for the canonical source repository")
-  call append(4 + a:add_line, body."@copyright Copyright (c) 2014- viticm( viticm.ti@gmail.com )")
+  call append(3 + a:add_line, body."@link ".s:p_uri." for the canonical source repository")
+  call append(4 + a:add_line, body."@copyright Copyright (c) ".strftime("%Y")." ".s:p_author)
   call append(5 + a:add_line, body."@license")
-  call append(6 + a:add_line, body."@user viticm<viticm.ti@gmail.com>")
+  call append(6 + a:add_line, body."@user ".s:p_author)
   call append(7 + a:add_line, body."@date ".strftime("%Y/%m/%d %H:%M"))
   call append(8 + a:add_line, body."@uses your description")
   call append(9 + a:add_line, end)
@@ -154,7 +228,7 @@ function AddFileDecription(add_line, notechar)
 endfunction
 
 "update source file description
-function UpdateFileDecription(notechar)
+function! s:UpdateFileDecription(notechar)
   normal m'
   execute '/ '.a:notechar.' @date /s@.*$@\=" '.a:notechar.' \@date ".strftime("%Y/%m/%d %H:%M")@'
   normal ''
@@ -166,7 +240,7 @@ function UpdateFileDecription(notechar)
 endfunction
 
 "generate source file decription
-function GenerateFileDecription()
+function! GenerateFileDecription()
   let add_line = 0
   let extend_name = expand("%:e") "for diffrent file type
   let notechar = "*"
@@ -177,15 +251,17 @@ function GenerateFileDecription()
     let notechar = "-"
   elseif "vue" == extend_name
     let notechar = "<"
+  elseif "vim" == extend_name
+    let notechar = '"'
   endif
   let check_line = 6 + add_line
   let line = getline(check_line)
   let str = ' '.notechar.' @license'
   if line == str
-    call UpdateFileDecription(notechar)
+    call s:UpdateFileDecription(notechar)
     return
   endif
-  call AddFileDecription(add_line, notechar)
+  call s:AddFileDecription(add_line, notechar)
 endfunction
 "set filetype for extends files
 "au BufRead,BufNewFile *.txt set filetype=lua
