@@ -1,6 +1,13 @@
-""" version: 1.2
-""" author: viticm(viticm.ti@gmail.com)
-""" date: 2020-5-15
+"""
+ " VIM RUN CONFIG ( https://github.com/viticm/vimrc )
+ " $Id my_configs.vim
+ " @link https://github.com/viticm/vimrc for the canonical source repository
+ " @copyright Copyright (c) 2020 viticm( viticm.ti@gmail.com )
+ " @license
+ " @user viticm( viticm.ti@gmail.com )
+ " @date 2020/05/15 09:51
+ " @uses Some diffrent config for user
+"""
 
 "not left margin
 set foldcolumn=0
