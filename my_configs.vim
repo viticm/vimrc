@@ -165,7 +165,6 @@ function! s:GetProjectName()
     let r = s:GetCurDirName()
     let first_pos = stridx(r, '-')
     let first_name = strpart(r, 0, first_pos)
-    echo first_name
     let r = tr(r, '-', ' ')
     if has_key(s:framework_list, first_name)
       let r = first_name.' FRAMEWORK '.strpart(r, first_pos + 1)
