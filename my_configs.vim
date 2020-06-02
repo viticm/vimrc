@@ -1,13 +1,6 @@
-"""
- " VIM RUN CONFIG ( https://github.com/viticm/vimrc )
- " $Id my_configs.vim
- " @link https://github.com/viticm/vimrc for the canonical source repository
- " @copyright Copyright (c) 2020 viticm( viticm.ti@gmail.com )
- " @license
- " @user viticm( viticm.ti@gmail.com )
- " @date 2020/05/15 09:51
- " @uses Some diffrent config for user
-"""
+""" version: 1.2
+""" author: viticm(viticm.ti@gmail.com)
+""" date: 2020-5-15
 
 "not left margin
 set foldcolumn=0
@@ -29,6 +22,7 @@ set ts=2
 set sw=2
 set nowrap
 set colorcolumn=80
+set expandtab
 set nu
 map <F4> :NERDTreeToggle<cr>
 map <F11> :!sh ./mk_tags<CR>
@@ -110,26 +104,26 @@ let g:neocomplete#sources#include#max_processes = 0
 map <F10> :NeoCompleteToggle<CR>
 
 "multi language
-if has("multi_byte")
+if has("multi_byte") 
   "utf-8
-  set termencoding=utf-8
-  set formatoptions+=mM
-  set fencs=utf-8,gbk
-
+  set termencoding=utf-8 
+  set formatoptions+=mM 
+  set fencs=utf-8,gbk 
+  
   "file codings
   set encoding=utf-8
   set fileencodings=ucs-bom,utf-8,cp936,gbk,gb2312
-
-  if v:lang =~? '^/(zh/)/|/(ja/)/|/(ko/)'
-     set ambiwidth=double
-  endif
-  if has("win32")
-    source $VIMRUNTIME/delmenu.vim
-    source $VIMRUNTIME/menu.vim
-    language messages zh_CN.utf-8
-  endif
-else
-  echoerr "Sorry, this version of (g)vim was not compiled with +multi_byte"
+ 
+  if v:lang =~? '^/(zh/)/|/(ja/)/|/(ko/)' 
+     set ambiwidth=double 
+  endif 
+  if has("win32") 
+    source $VIMRUNTIME/delmenu.vim 
+    source $VIMRUNTIME/menu.vim 
+    language messages zh_CN.utf-8 
+  endif 
+else 
+  echoerr "Sorry, this version of (g)vim was not compiled with +multi_byte" 
 endif
 
 let s:vproject_info = {}
@@ -153,7 +147,7 @@ endfunction
 "get current directory name
 function! s:GetCurDirName()
   let cur_path = substitute(getcwd(), "", "", "g")
-  if "/" == cur_path
+  if "/" == cur_path 
     return ""
   endif
   let pos = strridx(cur_path, '/')
@@ -273,7 +267,6 @@ function! GenerateFileDecription()
   endif
   call s:AddFileDecription(add_line, notechar)
 endfunction
-
 "set filetype for extends files
 "au BufRead,BufNewFile *.txt set filetype=lua
 autocmd FileType php set ts=4
@@ -281,6 +274,7 @@ autocmd FileType php set sw=4
 autocmd FileType php set expandtab
 autocmd FileType php set autoindent
 autocmd FileType php set colorcolumn=120
+
 
 "For c++11, if you want check in source then open it.
 let g:syntastic_cpp_compiler = 'g++'
