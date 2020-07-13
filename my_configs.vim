@@ -1,6 +1,13 @@
-""" version: 1.2
-""" author: viticm(viticm.ti@gmail.com)
-""" date: 2020-5-15
+"""
+ " VIM RUN CONFIG ( https://github.com/viticm/vimrc )
+ " $Id my_configs.vim
+ " @link https://github.com/viticm/vimrc for the canonical source repository
+ " @copyright Copyright (c) 2020 viticm( viticm.ti@gmail.com )
+ " @license
+ " @user viticm( viticm.ti@gmail.com )
+ " @date 2020/07/13 16:34
+ " @uses My vim config file.
+"""
 
 "not left margin
 set foldcolumn=0
@@ -285,4 +292,5 @@ let g:syntastic_cpp_config_file = '.syntastic_c_config'
 let g:syntastic_auto_jump = 1
 
 "Disable the ale cheker(Now use syntastic)
+"cn: ale暂时未找到头文件配置，以后有需要则替换syntastic的检测方式
 let g:ale_enabled = 0
