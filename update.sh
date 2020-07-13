@@ -42,6 +42,7 @@ vim-blade https://github.com/jwalton512/vim-blade
 vim-vue https://github.com/posva/vim-vue
 syntastic https://github.com/vim-syntastic/syntastic
 eslint-plugin-vue https://github.com/vuejs/eslint-plugin-vue
+webapi-vim https://github.com/mattn/webapi-vim
 "
 clean_plugindir="no" #update plugin will delete the old dir
 
