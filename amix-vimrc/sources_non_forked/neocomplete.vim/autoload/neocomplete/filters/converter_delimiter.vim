@@ -1,7 +1,6 @@
 "=============================================================================
 " FILE: converter_delimiter.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 05 Dec 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -27,7 +26,7 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-function! neocomplete#filters#converter_delimiter#define() "{{{
+function! neocomplete#filters#converter_delimiter#define() abort "{{{
   return s:converter
 endfunction"}}}
 
@@ -36,17 +35,15 @@ let s:converter = {
       \ 'description' : 'delimiter converter',
       \}
 
-function! s:converter.filter(context) "{{{
+" @vimlint(EVL102, 1, l:delim_cnt)
+function! s:converter.filter(context) abort "{{{
   if g:neocomplete#max_keyword_width < 0
     return a:context.candidates
   endif
 
   " Delimiter check.
-  let filetype = neocomplete#get_context_filetype()
-
-  let next_keyword = neocomplete#filters#
-        \converter_remove_next_keyword#get_next_keyword(a:context.source_name)
-  for delimiter in get(g:neocomplete#delimiter_patterns, filetype, [])
+  for delimiter in get(g:neocomplete#delimiter_patterns,
+        \ a:context.filetype, [])
     " Count match.
     let delim_cnt = 0
     let delimiter_vim = neocomplete#util#escape_pattern(delimiter)
@@ -62,10 +59,13 @@ function! s:converter.filter(context) "{{{
       local candidates = vim.eval('a:context.candidates')
       local pattern = vim.eval('neocomplete#filters#escape(delimiter)')..'.'
       for i = 0, #candidates-1 do
-        if string.find(candidates[i].word, pattern, 1) ~= nil then
+        if string.find(candidates[i].word, pattern, 1) ~= nil and (
+            not candidates[i].abbr or
+            string.gsub(candidates[i].word, '%([^)]*%)?', '()')
+              == string.gsub(candidates[i].abbr, '%([^)]*%)?', '()')) then
           vim.command('call s:process_delimiter(a:context, '..
             'a:context.candidates['.. i ..
-            '], delimiter_vim, delim_cnt, next_keyword)')
+            '], delimiter_vim, delim_cnt)')
         end
       end
     end
@@ -74,13 +74,14 @@ EOF
 
   return a:context.candidates
 endfunction"}}}
+" @vimlint(EVL102, 0, l:delim_cnt)
 
-function! s:process_delimiter(context, candidate, delimiter, delim_cnt, next_keyword)
+function! s:process_delimiter(context, candidate, delimiter, delim_cnt) abort
   let candidate = a:candidate
 
   let split_list = split(candidate.word, a:delimiter.'\ze.', 1)
   let delimiter_sub = substitute(
-        \ a:delimiter, '\\\([.^$]\)', '\1', 'g')
+        \ a:delimiter, '\\\(.\)', '\1', 'g')
   let candidate.abbr = join(
         \ split(get(candidate, 'abbr', candidate.word),
         \             a:delimiter.'\ze.', 1)[ : a:delim_cnt],
@@ -96,7 +97,7 @@ function! s:process_delimiter(context, candidate, delimiter, delim_cnt, next_key
     let candidate.abbr .= delimiter_sub . '~'
     let candidate.dup = 0
 
-    if g:neocomplete#enable_auto_delimiter && a:next_keyword == ''
+    if g:neocomplete#enable_auto_delimiter
       let candidate.word .= delimiter_sub
     endif
   endif
@@ -104,6 +105,7 @@ function! s:process_delimiter(context, candidate, delimiter, delim_cnt, next_key
   " Clear previous result.
   let a:context.prev_candidates = []
   let a:context.prev_complete_pos = -1
+  let a:context.prev_line = ''
 endfunction
 
 let &cpo = s:save_cpo

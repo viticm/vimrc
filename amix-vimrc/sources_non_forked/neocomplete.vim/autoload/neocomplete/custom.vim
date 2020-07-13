@@ -1,7 +1,6 @@
 "=============================================================================
 " FILE: custom.vim
 " AUTHOR: Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 04 Jun 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -27,7 +26,7 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-function! neocomplete#custom#get() "{{{
+function! neocomplete#custom#get() abort "{{{
   if !exists('s:custom')
     let s:custom = {}
     let s:custom.sources = {}
@@ -37,7 +36,7 @@ function! neocomplete#custom#get() "{{{
   return s:custom
 endfunction"}}}
 
-function! neocomplete#custom#source(source_name, option_name, value) "{{{
+function! neocomplete#custom#source(source_name, option_name, value) abort "{{{
   let custom_sources = neocomplete#custom#get().sources
 
   for key in split(a:source_name, '\s*,\s*')

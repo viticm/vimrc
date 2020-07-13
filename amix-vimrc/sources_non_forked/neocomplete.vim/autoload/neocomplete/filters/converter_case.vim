@@ -1,7 +1,6 @@
 "=============================================================================
 " FILE: converter_case.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 06 Jun 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -27,7 +26,7 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-function! neocomplete#filters#converter_case#define() "{{{
+function! neocomplete#filters#converter_case#define() abort "{{{
   return s:converter
 endfunction"}}}
 
@@ -36,19 +35,19 @@ let s:converter = {
       \ 'description' : 'case converter',
       \}
 
-function! s:converter.filter(context) "{{{
+function! s:converter.filter(context) abort "{{{
   if !neocomplete#is_text_mode() && !neocomplete#within_comment()
     return a:context.candidates
   endif
 
-  if a:context.complete_str =~ '^\l\+$'
+  if a:context.complete_str =~ '^\l\{3}$'
     for candidate in s:get_convert_candidates(a:context.candidates)
       let candidate.word = tolower(candidate.word)
       if has_key(candidate, 'abbr')
         let candidate.abbr = tolower(candidate.abbr)
       endif
     endfor
-  elseif a:context.complete_str =~ '^\u\+$'
+  elseif a:context.complete_str =~ '^\u\{3}$'
     for candidate in s:get_convert_candidates(a:context.candidates)
       let candidate.word = toupper(candidate.word)
       if has_key(candidate, 'abbr')
@@ -58,7 +57,7 @@ function! s:converter.filter(context) "{{{
   elseif a:context.complete_str =~ '^\u\l\+$'
     for candidate in s:get_convert_candidates(a:context.candidates)
       let candidate.word = toupper(candidate.word[0]).
-            \ tolower(candidate.word[1:])
+            \ candidate.word[1:]
       if has_key(candidate, 'abbr')
         let candidate.abbr = toupper(candidate.abbr[0]).
               \ tolower(candidate.abbr[1:])
@@ -69,7 +68,7 @@ function! s:converter.filter(context) "{{{
   return a:context.candidates
 endfunction"}}}
 
-function! s:get_convert_candidates(candidates)
+function! s:get_convert_candidates(candidates) abort
   return filter(copy(a:candidates),
         \ "get(v:val, 'neocomplete__convertable', 1)
         \  && v:val.word =~ '^[a-zA-Z0-9_''-]\\+$'")

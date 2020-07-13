@@ -1,7 +1,6 @@
 "=============================================================================
 " FILE: matcher_fuzzy.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 10 Jun 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -27,7 +26,7 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-function! neocomplete#filters#matcher_fuzzy#define() "{{{
+function! neocomplete#filters#matcher_fuzzy#define() abort "{{{
   return s:matcher
 endfunction"}}}
 
@@ -36,10 +35,11 @@ let s:matcher = {
       \ 'description' : 'fuzzy matcher',
       \}
 
-function! s:matcher.filter(context) "{{{
+function! s:matcher.filter(context) abort "{{{
   if len(a:context.complete_str) > 10
     " Mix fuzzy mode.
-    let fuzzy_len = len(a:context.complete_str)/2
+    let len = len(a:context.complete_str)
+    let fuzzy_len = len - len/(1 + len/10)
     let pattern =
           \ neocomplete#filters#escape(
           \     a:context.complete_str[: fuzzy_len-1])  .
@@ -58,14 +58,13 @@ do
   local pattern = vim.eval('pattern')
   local input = vim.eval('a:context.complete_str')
   local candidates = vim.eval('a:context.candidates')
-  local len = string.len(input)
   if vim.eval('&ignorecase') ~= 0 then
     pattern = string.lower(pattern)
     input = string.lower(input)
     for i = #candidates-1, 0, -1 do
       local word = vim.type(candidates[i]) == 'dict' and
         string.lower(candidates[i].word) or string.lower(candidates[i])
-      if string.len(word) <= len or string.find(word, pattern, 1) == nil then
+      if string.find(word, pattern, 1) == nil then
         candidates[i] = nil
       end
     end
@@ -73,7 +72,7 @@ do
     for i = #candidates-1, 0, -1 do
       local word = vim.type(candidates[i]) == 'dict' and
         candidates[i].word or candidates[i]
-      if string.len(word) <= len or string.find(word, pattern, 1) == nil then
+      if string.find(word, pattern, 1) == nil then
         candidates[i] = nil
       end
     end

@@ -1,7 +1,6 @@
 "=============================================================================
 " FILE: filters.vim
 " AUTHOR: Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 10 Dec 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -27,7 +26,7 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-function! neocomplete#filters#fuzzy_escape(string) "{{{
+function! neocomplete#filters#fuzzy_escape(string) abort "{{{
   " Escape string for lua regexp.
   let string = substitute(neocomplete#filters#escape(a:string),
         \ '\w', '\0.*', 'g')
@@ -37,7 +36,7 @@ function! neocomplete#filters#fuzzy_escape(string) "{{{
   return string
 endfunction"}}}
 
-function! neocomplete#filters#escape(string) "{{{
+function! neocomplete#filters#escape(string) abort "{{{
   " Escape string for lua regexp.
   return substitute(a:string,
         \ '[%\[\]().*+?^$-]', '%\0', 'g')

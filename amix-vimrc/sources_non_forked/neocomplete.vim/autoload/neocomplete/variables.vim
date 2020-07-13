@@ -1,7 +1,6 @@
 "=============================================================================
 " FILE: variables.vim
 " AUTHOR: Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 04 Jun 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -27,7 +26,7 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-function! neocomplete#variables#get_frequencies() "{{{
+function! neocomplete#variables#get_frequencies() abort "{{{
   if !exists('s:filetype_frequencies')
     let s:filetype_frequencies = {}
   endif
@@ -41,14 +40,21 @@ function! neocomplete#variables#get_frequencies() "{{{
   return frequencies
 endfunction"}}}
 
-function! neocomplete#variables#get_sources() "{{{
+function! neocomplete#variables#get_sources() abort "{{{
   if !exists('s:sources')
     let s:sources = {}
   endif
   return s:sources
 endfunction"}}}
 
-function! neocomplete#variables#get_filters() "{{{
+function! neocomplete#variables#get_source(name) abort "{{{
+  if !exists('s:sources')
+    let s:sources = {}
+  endif
+  return get(s:sources, a:name, {})
+endfunction"}}}
+
+function! neocomplete#variables#get_filters() abort "{{{
   if !exists('s:filters')
     let s:filters = {}
   endif

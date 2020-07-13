@@ -1,7 +1,6 @@
 "=============================================================================
 " FILE: converter_abbr.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 02 Sep 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -27,16 +26,16 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-function! neocomplete#filters#converter_abbr#define() "{{{
+function! neocomplete#filters#converter_abbr#define() abort "{{{
   return s:converter
 endfunction"}}}
 
 let s:converter = {
       \ 'name' : 'converter_abbr',
-      \ 'description' : 'abbr converter',
+      \ 'description' : 'abbreviate abbr converter',
       \}
 
-function! s:converter.filter(context) "{{{
+function! s:converter.filter(context) abort "{{{
   if g:neocomplete#max_keyword_width < 0
     return a:context.candidates
   endif

@@ -1,7 +1,6 @@
 "=============================================================================
 " FILE: sorter_rank.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 28 May 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -27,7 +26,7 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-function! neocomplete#filters#sorter_rank#define() "{{{
+function! neocomplete#filters#sorter_rank#define() abort "{{{
   return s:sorter
 endfunction"}}}
 
@@ -36,7 +35,7 @@ let s:sorter = {
       \ 'description' : 'sort by matched rank order',
       \}
 
-function! s:sorter.filter(context) "{{{
+function! s:sorter.filter(context) abort "{{{
   lua << EOF
 do
   local candidates = vim.eval('a:context.candidates')
