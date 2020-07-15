@@ -213,6 +213,10 @@ function! s:AddFileDecription(add_line, notechar)
     let begin = '"""'
     let body = ' " '
     let end = '"""'
+  elseif '#' == a:notechar
+    let begin = '###'
+    let body = ' # '
+    let end = '###'
   endif
   call append(0 + a:add_line, begin)
   call append(1 + a:add_line, body.s:p_name." ( ".s:p_uri." )")
@@ -257,6 +261,8 @@ function! GenerateFileDecription()
     let notechar = "<"
   elseif "vim" == extend_name
     let notechar = '"'
+  elseif "sh" == extend_name
+    let notechar = '#'
   endif
   let check_line = 6 + add_line
   let line = getline(check_line)
