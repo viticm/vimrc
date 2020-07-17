@@ -264,11 +264,16 @@ function! GenerateFileDecription()
   elseif "sh" == extend_name
     let notechar = '#'
   endif
+  let body = notechar
+  if "vue" == extend_name
+    let body = '-'
+  endif
+
   let check_line = 6 + add_line
   let line = getline(check_line)
-  let str = ' '.notechar.' @license'
+  let str = ' '.body.' @license'
   if line == str
-    call s:UpdateFileDecription(notechar)
+    call s:UpdateFileDecription(body)
     return
   endif
   call s:AddFileDecription(add_line, notechar)
@@ -291,16 +296,16 @@ let g:syntastic_c_config_file = '.syntastic_c_config'
 let g:syntastic_cpp_config_file = '.syntastic_c_config'
 let g:syntastic_auto_jump = 1
 let g:syntastic_check_on_open = 0
-autocmd FileType vue let g:syntastic_check_on_open = 1
-autocmd FileType js let g:syntastic_check_on_open = 1
+"autocmd FileType vue let g:syntastic_check_on_open = 1
+"autocmd FileType js let g:syntastic_check_on_open = 1
 
 
 "Disable the ale cheker(Now use syntastic)
 "（目前使用了make -n的方式，因此暂时替换syntastic主动检测）
 " vue中使用了syntastic插件，因此禁用自动ale
 "let g:ale_enabled = 0
-autocmd FileType vue let g:ale_enabled = 0
-autocmd FileType js let g:ale_enabled = 0
+"autocmd FileType vue let g:ale_enabled = 0
+"autocmd FileType js let g:ale_enabled = 0
 
 "Set the automatically determine flags by make -n.
 "cn: 如果项目直接用的make编译，设置这个标记ale就能正常工作了
