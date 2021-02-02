@@ -192,9 +192,97 @@ function! s:GetProjectAuthor()
   endif
 endfunction
 
+"get the project header root
+function! s:GetProjectHeaderRoot()
+  if has_key(s:vproject_info, 'header_root')
+    return s:vproject_info.header_root
+  else
+    return "pf"
+  endif
+endfunction
+
+
 let s:p_name = s:GetProjectName() "project name
 let s:p_author = s:GetProjectAuthor() "project author
 let s:p_uri = s:GetProjectURI() "project uri
+let s:p_header_root = s:GetProjectHeaderRoot() "project header root
+
+function! s:GitRoot()
+  " Drop extraneous characters at the end of returned git string
+  return system("git rev-parse --show-toplevel")[0:-2]
+endfunction
+
+"Guard for c/c++ header.
+function! s:PathToGuard(path)
+  let guard_str = toupper(a:path)
+  let guard_str = substitute(guard_str, '\/', '_', 'g')
+  return substitute(guard_str, '\.', '_', 'g').'_'
+endfunction
+
+let s:lineNum = 11
+function! s:PrintLine(content)
+  call setline(s:lineNum, a:content)
+  let s:lineNum += 1
+endfunction
+
+function! s:AddNamespaceAndHashGuard()
+  let file_path = expand('%:p')
+  let git_root = s:GitRoot()
+  if matchstr(file_path, git_root) == ""
+    " File is not under current git root.
+    return
+  endif
+  let cur_path = substitute(getcwd(), "", "", "g")
+  let relative_path = file_path[strlen(cur_path . '/include')+1:]
+  let directories = split(relative_path, '/')[0:-2]
+  let guard_str = s:PathToGuard(relative_path)
+  call s:PrintLine('')  " Empty line.
+  call s:PrintLine('#ifndef ' . guard_str)
+  call s:PrintLine('#define ' . guard_str)
+  call s:PrintLine('')  " Empty line.
+  
+  let directories_size = len(directories)
+  if directories[0] == s:p_header_root
+    let i = 1
+    while i < directories_size
+      let name = directories[i]
+      if 1 == i
+        let name = s:p_header_root . '_' . name
+      endif
+      call s:PrintLine('namespace ' . name . ' {')
+      let i += 1
+    endwhile
+  else
+    for dir in directories
+      call s:PrintLine('namespace ' . dir . ' {')
+    endfor
+  endif
+
+  call s:PrintLine('')
+
+  call reverse(directories)
+  if directories[directories_size - 1] == s:p_header_root
+    let i = directories_size - 2
+    while i >= 0
+      let name = directories[i]
+      if directories_size - 2 == i
+        let name = s:p_header_root . '_' . name
+      endif
+      call s:PrintLine('} // namespace ' . name)
+      let i -= 1
+    endwhile
+  else
+    for dir in directories
+      call s:PrintLine('} // namespace ' . dir)
+    endfor
+  endif
+  call s:PrintLine('')
+  call s:PrintLine('#endif // ' . guard_str)
+endfunction
+
+"au BufNewFile *.hpp :call AddNamespaceAndHashGuard()
+"au BufNewFile *.h :call AddNamespaceAndHashGuard()
+
 
 "Add file decription.
 function! s:AddFileDecription(add_line, notechar)
@@ -277,7 +365,11 @@ function! GenerateFileDecription()
     return
   endif
   call s:AddFileDecription(add_line, notechar)
+  if "h" == extend_name
+    call s:AddNamespaceAndHashGuard()
+  endif
 endfunction
+
 "set filetype for extends files
 "au BufRead,BufNewFile *.txt set filetype=lua
 autocmd FileType php set ts=4
@@ -310,3 +402,4 @@ let g:syntastic_check_on_open = 0
 "Set the automatically determine flags by make -n.
 "cn: 如果项目直接用的make编译，设置这个标记ale就能正常工作了
 let g:ale_c_parse_makefile = 1
+"let g:ale_cpp_gcc_options = '-std=c++17 -Wall'
