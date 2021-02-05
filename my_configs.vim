@@ -262,14 +262,14 @@ function! s:AddNamespaceAndHashGuard()
 
   call reverse(directories)
   if directories[directories_size - 1] == s:p_header_root
-    let i = directories_size - 2
-    while i >= 0
+    let i = 0
+    while i <= directories_size - 2
       let name = directories[i]
       if directories_size - 2 == i
         let name = s:p_header_root . '_' . name
       endif
       call s:PrintLine('} // namespace ' . name)
-      let i -= 1
+      let i += 1
     endwhile
   else
     for dir in directories
