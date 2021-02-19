@@ -367,7 +367,7 @@ function! GenerateFileDecription()
   endif
   call s:AddFileDecription(add_line, notechar)
   if "h" == extend_name
-    echohl WarningMsg | echo "Successful Add namespace and hash guard." | echohl None
+    "echohl WarningMsg | echo "Successful Add namespace and hash guard." | echohl None
     call s:AddNamespaceAndHashGuard()
   endif
 endfunction
@@ -404,4 +404,4 @@ let g:syntastic_check_on_open = 0
 "Set the automatically determine flags by make -n.
 "cn: 如果项目直接用的make编译，设置这个标记ale就能正常工作了
 let g:ale_c_parse_makefile = 1
-"let g:ale_cpp_gcc_options = '-std=c++17 -Wall'
+let g:ale_cpp_gcc_options = '-std=c++17 -Wall'
