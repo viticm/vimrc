@@ -232,6 +232,7 @@ function! s:AddNamespaceAndHashGuard()
     " File is not under current git root.
     return
   endif
+  let s:lineNum = 11 " Reset line.
   let cur_path = substitute(getcwd(), "", "", "g")
   let relative_path = file_path[strlen(cur_path . '/include')+1:]
   let directories = split(relative_path, '/')[0:-2]
@@ -366,6 +367,7 @@ function! GenerateFileDecription()
   endif
   call s:AddFileDecription(add_line, notechar)
   if "h" == extend_name
+    echohl WarningMsg | echo "Successful Add namespace and hash guard." | echohl None
     call s:AddNamespaceAndHashGuard()
   endif
 endfunction
