@@ -34,6 +34,7 @@ vim-fugitive https://github.com/tpope/vim-fugitive
 vim-airline https://github.com/bling/vim-airline
 vimerl https://github.com/jimenezrick/vimerl
 neocomplete.vim https://github.com/Shougo/neocomplete.vim
+deoplete.nvim https://github.com/Shougo/deoplete.nvim
 vim-dispatch https://github.com/tpope/vim-dispatch
 vim-projectionist https://github.com/tpope/vim-projectionist
 vim-composer https://github.com/noahfrederick/vim-composer

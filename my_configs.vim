@@ -97,11 +97,15 @@ let NERDTreeWinSize=31
 
 
 "neocomplete
-let g:neocomplete#enable_at_startup = 1
-let g:acp_enableAtStartup = 0
-let g:neocomplete#enable_smart_case = 1
-let g:neocomplete#sources#include#max_processes = 0
-map <F10> :NeoCompleteToggle<CR>
+if has('patch-8.2.1066')
+  let g:deoplete#enable_at_startup = 1
+else
+  let g:neocomplete#enable_at_startup = 1
+  let g:acp_enableAtStartup = 0
+  let g:neocomplete#enable_smart_case = 1
+  let g:neocomplete#sources#include#max_processes = 0
+  map <F10> :NeoCompleteToggle<CR>
+endif
 
 "multi language
 if has("multi_byte") 
