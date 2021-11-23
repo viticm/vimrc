@@ -11,3 +11,6 @@
   --with-lua-prefix=/usr/local
   #--enable-pythoninterp \
   #--enable-rubyinterp --enable-perlinterp
+
+# for deoplete.nvim
+sudo pip3 install --user pynvim
