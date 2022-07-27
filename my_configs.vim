@@ -409,3 +409,7 @@ let g:syntastic_check_on_open = 0
 "cn: 如果项目直接用的make编译，设置这个标记ale就能正常工作了
 let g:ale_c_parse_makefile = 1
 "let g:ale_cpp_gcc_options = '-std=c++17 -Wall'
+
+"scheme
+set background=dark
+colorscheme PaperColor
