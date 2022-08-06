@@ -42,7 +42,7 @@ function warning_message() {
 #@return void
 function fixbug() {
   local runtimepath=${1}
-  local is_win32=false
+  local is_win32=true
   if [[ `uname | grep W32_NT` != "" ]] ; then
     is_win32=true
   fi
