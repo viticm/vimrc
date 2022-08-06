@@ -76,8 +76,8 @@ function base() {
   local vimrcdir="amix-vimrc"
   local amixvimrc_url="https://github.com/amix/vimrc"
   [[ ! -d amix-vimrc ]] && git clone $amixvimrc_url $vimrcdir
-  cmd_runtimepath="cat ${vimrcdir}/install_awesome_vimrc.sh | 
-                  grep runtimepath | 
+  cmd_runtimepath="cat ${vimrcdir}/install_awesome_vimrc.sh |
+                  grep runtimepath |
                   sed 's/.*runtimepath.*=//g'
                    "
   runtimepath=`echo ${cmd_runtimepath} | sh`
@@ -101,8 +101,8 @@ function full() {
   local vimrcdir="amix-vimrc"
   local amixvimrc_url="https://github.com/amix/vimrc"
   [[ ! -d amix-vimrc ]] && git clone $amixvimrc_url $vimrcdir
-  cmd_runtimepath="cat ${vimrcdir}/install_awesome_vimrc.sh | 
-                  grep runtimepath | 
+  cmd_runtimepath="cat ${vimrcdir}/install_awesome_vimrc.sh |
+                  grep runtimepath |
                   sed 's/.*runtimepath.*=//g'
                    "
   runtimepath=`echo ${cmd_runtimepath} | sh`
@@ -113,6 +113,7 @@ function full() {
   rm -rf ${HOME}/.vim*
   rm -rf ${runtimepath}
   cp amix-vimrc ${runtimepath} -r
+  cp my-plugins/* ${runtimepath}/my_plugins/ -r
   sh ${runtimepath}/install_awesome_vimrc.sh
   cp ${currentdir}/my_configs.vim ${runtimepath}
   cp ${currentdir}/update.sh ${runtimepath}
@@ -146,7 +147,7 @@ function main() {
   esac
 }
 if [[ "" == ${@} ]] ; then
-  error_message "${0}: no commond specified.You can use <${0} --help> 
+  error_message "${0}: no commond specified.You can use <${0} --help>
                 get parameters for this script."
 else
   main "${@}"

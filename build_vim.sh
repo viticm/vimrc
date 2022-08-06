@@ -14,3 +14,4 @@
 
 # for deoplete.nvim
 sudo pip3 install --user pynvim
+
