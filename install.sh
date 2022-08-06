@@ -86,7 +86,7 @@ function base() {
   read answer
   rm -rf ${HOME}/*.vim
   rm -rf ${runtimepath}
-  cp amix-vimrc ${runtimepath} -r
+  cp -r amix-vimrc ${runtimepath}
   sh ${runtimepath}/install_basic_vimrc.sh
   cp ${currentdir}/update.sh ${runtimepath}
   fixbug $runtimepath
@@ -112,8 +112,8 @@ function full() {
   rm -rf ${HOME}/*.vim
   rm -rf ${HOME}/.vim*
   rm -rf ${runtimepath}
-  cp amix-vimrc ${runtimepath} -r
-  cp my-plugins/* ${runtimepath}/my_plugins/ -r
+  cp -r amix-vimrc ${runtimepath}
+  cp -r my-plugins/* ${runtimepath}/my_plugins/
   sh ${runtimepath}/install_awesome_vimrc.sh
   cp ${currentdir}/my_configs.vim ${runtimepath}
   cp ${currentdir}/update.sh ${runtimepath}
@@ -128,7 +128,7 @@ function update() {
   rm -rf ${tmpdir}
   git clone git://github.com/amix/vimrc.git ${tmpdir}
   rm -rf ${tmpdir}/.git
-  cp ${tmpdir}/* amix-vimrc/ -r
+  cp -r ${tmpdir}/* amix-vimrc/
   rm -rf $tmpdir
   git add -A
   git commit -m "update the new amix vimrc"

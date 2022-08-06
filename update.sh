@@ -131,7 +131,7 @@ function vimrc() {
     git pull --rebase
   else
     git clone git://github.com/amix/vimrc.git $tmpdir
-    cp $tmpdir/* ./ -r
+    cp -r $tmpdir/* ./
   fi
   rm -rf $tmpdir
   fixbug ./
@@ -166,7 +166,7 @@ function plugin() {
       if [[ ! -d ${plugindir}/${pluginname}/.git ]] ; then
         mkdir -p ${tmpdir}
         cmd=`cd $tmpdir && git clone $pluginurl`
-        cp ${tmpdir}/${pluginname} ${plugindir} -r
+        cp -r ${tmpdir}/${pluginname} ${plugindir}
       else
         cmd=`cd $plugindir/${pluginname} && git pull`
       fi
