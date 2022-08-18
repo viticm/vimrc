@@ -79,10 +79,13 @@ if has("cscope")
 endif
 
 "for taglist
-let g:Tlist_Use_Right_Window = 1
-let g:Tlist_Enable_Fold_Column = 0
-let g:Tlist_Exit_OnlyWindow = 1
-map <F9> :Tlist<CR>
+"let g:Tlist_Use_Right_Window = 1
+"let g:Tlist_Enable_Fold_Column = 0
+"let g:Tlist_Exit_OnlyWindow = 1
+"map <F9> :Tlist<CR>
+
+"tagbar
+map <F9> :TagbarToggle<CR>
 
 "NERD Tree
 let NERDChristmasTree=1
