@@ -10,7 +10,7 @@ is_win32=false
 ENV_PATH="F:\tools\editor\vim\vim74"
 if [[ `uname | grep W32_NT` != "" ]] ; then
   is_win32=true
-  export PATH=$ENV_PATH:$PATH
+  export PATH=$ENV_PATH
 fi
 
 for path in ${paths}
