@@ -387,9 +387,9 @@ autocmd FileType php set expandtab
 autocmd FileType php set autoindent
 autocmd FileType php set colorcolumn=120
 
-"For c++11, if you want check in source then open it.
+"For c++23, if you want check in source then open it.
 let g:syntastic_cpp_compiler = 'g++'
-let g:syntastic_cpp_compiler_options = ' -std=c++17 -stdlib=libc++'
+let g:syntastic_cpp_compiler_options = ' -std=c++23 -stdlib=libc++'
 
 "For syntastic others.
 "Defalut aisable automatically checker.
