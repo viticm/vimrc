@@ -44,6 +44,7 @@ set path=.,,
 set path+=/usr/include
 set path+=/usr/local/include
 set path+=~/**
+set path+=$PWD/include
 
 let g:neocomplcache_enable_at_startup=1
 
