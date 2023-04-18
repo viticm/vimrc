@@ -390,6 +390,7 @@ autocmd FileType php set colorcolumn=120
 
 "The cpp compiler options.
 let s:cpp_compiler_options = ' -std=c++23 -Wall'
+"let s:cpp_compiler_options .= " -DPLAIN_EPOLL"
 
 "For c++23, if you want check in source then open it.
 let g:syntastic_cpp_compiler = 'g++'
