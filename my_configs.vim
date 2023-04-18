@@ -388,9 +388,12 @@ autocmd FileType php set expandtab
 autocmd FileType php set autoindent
 autocmd FileType php set colorcolumn=120
 
+"The cpp compiler options.
+let s:cpp_compiler_options = ' -std=c++23 -Wall'
+
 "For c++23, if you want check in source then open it.
 let g:syntastic_cpp_compiler = 'g++'
-let g:syntastic_cpp_compiler_options = ' -std=c++23 -stdlib=libc++'
+let g:syntastic_cpp_compiler_options = s:cpp_compiler_options
 
 "For syntastic others.
 "Defalut aisable automatically checker.
@@ -413,7 +416,7 @@ let g:syntastic_check_on_open = 0
 "cn: 如果项目直接用的make编译，设置这个标记ale就能正常工作了
 let g:ale_c_parse_makefile = 1
 "cn: 在项目中一定要配置以下的编译参数，可以指定目录和编译参数
-"let g:ale_cpp_cc_options = '-std=c++23 -Wall'
+let g:ale_cpp_cc_options = s:cpp_compiler_options
 
 "scheme
 set background=dark
