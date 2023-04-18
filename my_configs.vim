@@ -205,7 +205,7 @@ function! s:GetProjectHeaderRoot()
   if has_key(s:vproject_info, 'header_root')
     return s:vproject_info.header_root
   else
-    return "pf"
+    return "plain"
   endif
 endfunction
 
