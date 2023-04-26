@@ -380,6 +380,9 @@ function! GenerateFileDecription()
   endif
 endfunction
 
+" Default to static completion for SQL
+let g:omni_sql_default_compl_type = 'syntax'
+
 "set filetype for extends files
 "au BufRead,BufNewFile *.txt set filetype=lua
 autocmd FileType php set ts=4
