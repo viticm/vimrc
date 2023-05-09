@@ -10,3 +10,9 @@
     - Use update script to update your vimrc or plugins.
     - sh ./update.sh --vimrc or sh ./update.sh --plugin
 
+## Recommand the plugins(not include):
+    - https://github.com/ycm-core/YouCompleteMe
+    - After install vimrc the clone to .vim_runtime directory.
+    - like: cd ~/.vim_runtime/sources_non_forked && git clone 
+    - https://github.com/ycm-core/YouCompleteMe && cd YouCompleteMe
+    - && python3 install.py
