@@ -15,4 +15,4 @@
     - After install vimrc the clone to .vim_runtime directory.
     - like: cd ~/.vim_runtime/sources_non_forked && git clone 
     - https://github.com/ycm-core/YouCompleteMe && cd YouCompleteMe
-    - && python3 install.py
+    - && python3 install.py --clang-completer --system-libclang
