@@ -49,6 +49,12 @@ the `<F7>` key if so.  For example, to remap it to `<F3>` instead, use:
 
     autocmd FileType python map <buffer> <F3> :call flake8#Flake8()<CR>
 
+Since the `autocmd` order is not specified in Vim, the previous
+recommendation is sometimes not sufficient to "unmap" `<F7>`. In such a
+case, being more explicit about it should help (see `:h no_mail_maps`):
+
+    let g:no_flake8_maps = 1
+
 For flake8 configuration options please consult the following page:
 
 http://flake8.pycqa.org/en/latest/user/configuration.html
@@ -88,11 +94,11 @@ To customize the gutter markers, set any of `flake8_error_marker`, `flake8_warni
 `flake8_pyflake_marker`, `flake8_complexity_marker`, `flake8_naming_marker`. Setting one to
 the empty string disables it. Ex.:
 
-    flake8_error_marker='EE'     " set error marker to 'EE'
-    flake8_warning_marker='WW'   " set warning marker to 'WW'
-    flake8_pyflake_marker=''     " disable PyFlakes warnings
-    flake8_complexity_marker=''  " disable McCabe complexity warnings
-    flake8_naming_marker=''      " disable naming warnings
+    let g:flake8_error_marker='EE'     " set error marker to 'EE'
+    let g:flake8_warning_marker='WW'   " set warning marker to 'WW'
+    let g:flake8_pyflake_marker=''     " disable PyFlakes warnings
+    let g:flake8_complexity_marker=''  " disable McCabe complexity warnings
+    let g:flake8_naming_marker=''      " disable naming warnings
 
 To customize the colors used for markers, define the highlight groups, `Flake8_Error`,
 `Flake8_Warning`, `Flake8_PyFlake`, `Flake8_Complexity`, `Flake8_Naming`:
@@ -132,7 +138,7 @@ maximum line length default.  This is a config setting that should be set in
 flake8 itself. (vim-flake8 "just" invokes it and deals with showing the output
 in Vim's quickfix window.)
 
-To do so, put the following into your `~/.config/flake8` file:
+To do so, put the following into a `.flake8` file at the root of your project:
 
     [flake8]
     max-line-length = 120
@@ -141,7 +147,7 @@ To do so, put the following into your `~/.config/flake8` file:
 History
 -------
 1.6: Deprecated configuring flake8 options through Vim settings.  Instead,
-advise users to use the `~/.config/flake8` config file.
+advise users to use a `.flake8` config file in the root of your project.
 
     - Decprecated options:
       - `g:flake8_builtins`

@@ -23,9 +23,9 @@ The awesome version includes a lot of great plugins, configurations and color sc
 To install for multiple users, the repository needs to be cloned to a location accessible for all the intended users.
 
 	git clone --depth=1 https://github.com/amix/vimrc.git /opt/vim_runtime
-	sh ~/.vim_runtime/install_awesome_parameterized.sh /opt/vim_runtime user0 user1 user2
-	# to install for all users with home directories
-	sh ~/.vim_runtime/install_awesome_parameterized.sh /opt/vim_runtime --all
+	sh /opt/vim_runtime/install_awesome_parameterized.sh /opt/vim_runtime user0 user1 user2
+	# to install for all users with home directories, note that root will not be included
+	sh /opt/vim_runtime/install_awesome_parameterized.sh /opt/vim_runtime --all
 	
 Naturally, `/opt/vim_runtime` can be any directory, as long as all the users specified have read access.
 
@@ -68,10 +68,6 @@ Just do a git rebase!
     git pull --rebase
     python update_plugins.py  # use python3 if python is unavailable
 
-NOTE: If you get `ModuleNotFoundError: No module named 'requests'`, you must first install the `requests` python module using `pip`, `pip3`, or `easy_install`.
-
-    pip install requests
-
 ## Some screenshots
 
 Colors when editing a Python file:
@@ -99,7 +95,7 @@ I recommend reading the docs of these plugins to understand them better. Each pl
 * [pathogen.vim](https://github.com/tpope/vim-pathogen): Manage your vim runtimepath 
 * [snipmate.vim](https://github.com/garbas/vim-snipmate): snipmate.vim aims to be a concise vim script that implements some of TextMate's snippets features in Vim
 * [ale](https://github.com/dense-analysis/ale): Syntax and lint checking for vim (ALE requires NeoVim >= 0.2.0 or Vim 8 with +timers +job +channel)
-* [vim-commentary](https://github.com/tpope/vim-commentary): Comment stuff out.  Use `gcc` to comment out a line (takes a count), `gc` to comment out the target of a motion. `gcu` uncomments a set of adjacent commented lines.
+* [vim-commentary](https://github.com/tpope/vim-commentary): Comment stuff out.  Use `gcc` to comment out a line (takes a count), `gc` to comment out the target of a motion. `gcu` uncomments a set of adjacent commented lines
 * [vim-expand-region](https://github.com/terryma/vim-expand-region): Allows you to visually select increasingly larger regions of text using the same key combination
 * [vim-fugitive](https://github.com/tpope/vim-fugitive): A Git wrapper so awesome, it should be illegal
 * [vim-indent-object](https://github.com/michaeljsmith/vim-indent-object): Defines a new text object representing lines of code at the same indent level. Useful for python/vim scripts
@@ -108,7 +104,8 @@ I recommend reading the docs of these plugins to understand them better. Each pl
 * [vim-zenroom2](https://github.com/amix/vim-zenroom2) Remove all clutter and focus only on the essential. Similar to iA Writer or Write Room
 * [gist-vim](https://github.com/mattn/gist-vim) Easily create gists from Vim using the `:Gist` command
 * [vim-indent-guides](https://github.com/nathanaelkane/vim-indent-guides) Is a plugin for visually displaying indent levels in Vim
-* [editorconfig-vim](https://github.com/editorconfig/editorconfig-vim) EditorConfig helps maintain consistent coding styles for multiple developers working on the same project across various editors and IDEs.
+* [editorconfig-vim](https://github.com/editorconfig/editorconfig-vim) EditorConfig helps maintain consistent coding styles for multiple developers working on the same project across various editors and IDEs
+* [copilot.vim](https://github.com/github/copilot.vim) Plugin for GitHub Copilot (AI autocompletion FTW 😅)
 
 
 ## Included color schemes
@@ -148,12 +145,13 @@ You can also install your plugins, for instance, via pathogen you can install [v
 	cd ~/.vim_runtime
 	git clone git://github.com/tpope/vim-rails.git my_plugins/vim-rails
 
-You can also install plugins without any plugin manager (vim 8+ required):  
-	Add `packloadall` to your .vimrc file  
-	Create pack plugin directory:  
-	`mkdir -p ~/.vim/pack/plugins/start`  
-	Clone the plugin that you want in that directory, for example:  
-	`git clone --depth=1 git://github.com/maxmellon/vim-jsx-pretty  ~/.vim/pack/plugins/vim-jsx-pretty`
+You can also install plugins without any plugin manager (vim 8+ required):
+
+* Add `packloadall` to your `.vimrc` file
+* Create pack plugin directory:\
+`mkdir -p ~/.vim_runtime/pack/plugins/start`
+* Clone the plugin that you want in that directory, for example:\
+`git clone --depth=1 git://github.com/maxmellon/vim-jsx-pretty  ~/.vim_runtime/pack/plugins/start/vim-jsx-pretty`
 
 
 ## Key Mappings
@@ -171,7 +169,6 @@ Map `<Space>` to `/` (search) and `<Ctrl>+<Space>` to `?` (backwards search):
 	
 	map <space> /
 	map <C-space> ?
-	map <silent> <leader><cr> :noh<cr>
 
 Disable highlights when you press `<leader><cr>`:
 	
@@ -201,7 +198,7 @@ Useful mappings for managing tabs:
 	
 	" Opens a new tab with the current buffer's path
 	" Super useful when editing files in the same directory
-	map <leader>te :tabedit <C-r>=expand("%:p:h")<cr>/
+	map <leader>te :tabedit <C-r>=escape(expand("%:p:h"), " ")<cr>/
 	
 Switch [CWD](http://vim.wikia.com/wiki/Set_working_directory_to_the_current_file) to the directory of the open buffer:
 	
@@ -356,7 +353,6 @@ Open [ctrlp.vim](https://github.com/kien/ctrlp.vim) plugin to quickly find a fil
 
     nnoremap <leader>v :.GBrowse!<CR>
     xnoremap <leader>v :'<'>GBrowse!<CR>
-
 
 ### Spell checking
 Pressing `<leader>ss` will toggle spell checking:
