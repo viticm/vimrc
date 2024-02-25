@@ -256,7 +256,7 @@ function! s:AddNamespaceAndHashGuard()
     while i < directories_size
       let name = directories[i]
       if 1 == i
-        let name = s:p_header_root . '_' . name
+        let name = s:p_header_root . '::' . name
       endif
       call s:PrintLine('namespace ' . name . ' {')
       let i += 1
@@ -275,7 +275,7 @@ function! s:AddNamespaceAndHashGuard()
     while i <= directories_size - 2
       let name = directories[i]
       if directories_size - 2 == i
-        let name = s:p_header_root . '_' . name
+        let name = s:p_header_root . '::' . name
       endif
       call s:PrintLine('} // namespace ' . name)
       let i += 1
