@@ -422,6 +422,7 @@ let g:syntastic_check_on_open = 0
 let g:ale_c_parse_makefile = 1
 "cn: 在项目中一定要配置以下的编译参数，可以指定目录和编译参数
 let g:ale_cpp_cc_options = s:cpp_compiler_options
+let g:ale_cpp_clangd_options = s:cpp_compiler_options
 
 "scheme
 set background=dark
