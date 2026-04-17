@@ -223,6 +223,9 @@ endfunction
 "Guard for c/c++ header.
 function! s:PathToGuard(path)
   let guard_str = toupper(a:path)
+  if has_key(s:vproject_info, 'header_root_define')
+    let guard_str = toupper(s:GetProjectHeaderRoot()) . '/' . guard_str
+  end
   let guard_str = substitute(guard_str, '\/', '_', 'g')
   return substitute(guard_str, '\.', '_', 'g').'_'
 endfunction
@@ -251,39 +254,41 @@ function! s:AddNamespaceAndHashGuard()
   call s:PrintLine('')  " Empty line.
   
   let directories_size = len(directories)
-  if directories[0] == s:p_header_root
-    let i = 1
-    while i < directories_size
-      let name = directories[i]
-      if 1 == i
-        let name = s:p_header_root . '::' . name
-      endif
-      call s:PrintLine('namespace ' . name . ' {')
-      let i += 1
-    endwhile
-  else
-    for dir in directories
-      call s:PrintLine('namespace ' . dir . ' {')
-    endfor
-  endif
+  if directories_size > 0
+    if directories[0] == s:p_header_root
+      let i = 1
+      while i < directories_size
+        let name = directories[i]
+        if 1 == i
+          let name = s:p_header_root . '::' . name
+        endif
+        call s:PrintLine('namespace ' . name . ' {')
+        let i += 1
+      endwhile
+    else
+      for dir in directories
+        call s:PrintLine('namespace ' . dir . ' {')
+      endfor
+    endif
 
-  call s:PrintLine('')
+    call s:PrintLine('')
 
-  call reverse(directories)
-  if directories[directories_size - 1] == s:p_header_root
-    let i = 0
-    while i <= directories_size - 2
-      let name = directories[i]
-      if directories_size - 2 == i
-        let name = s:p_header_root . '::' . name
-      endif
-      call s:PrintLine('} // namespace ' . name)
-      let i += 1
-    endwhile
-  else
-    for dir in directories
-      call s:PrintLine('} // namespace ' . dir)
-    endfor
+    call reverse(directories)
+    if directories[directories_size - 1] == s:p_header_root
+      let i = 0
+      while i <= directories_size - 2
+        let name = directories[i]
+        if directories_size - 2 == i
+          let name = s:p_header_root . '::' . name
+        endif
+        call s:PrintLine('} // namespace ' . name)
+        let i += 1
+      endwhile
+    else
+      for dir in directories
+        call s:PrintLine('} // namespace ' . dir)
+      endfor
+    endif
   endif
   call s:PrintLine('')
   call s:PrintLine('#endif // ' . guard_str)
