@@ -65,6 +65,7 @@ vim-hug-neovim-rpc https://github.com/roxma/vim-hug-neovim-rpc
 vim-go https://github.com/fatih/vim-go
 nvim-yarp https://github.com/roxma/nvim-yarp
 vim-devicons https://github.com/ryanoasis/vim-devicons
+vim-ai https://github.com/madox2/vim-ai
 "
 clean_plugindir="no" #update plugin will delete the old dir
 
